@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="5 products">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef4fb"/>
+      <stop offset="1" stop-color="#dbe9f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg5)"/>
+  <circle cx="330" cy="60" r="70" fill="#007BE5" fill-opacity="0.1"/>
+  <circle cx="60" cy="250" r="60" fill="#3fbf3f" fill-opacity="0.12"/>
+  <text x="200" y="205" text-anchor="middle" font-family="'Segoe UI',ui-sans-serif,Arial,sans-serif" font-size="150" font-weight="800" fill="#1c2b3a">5</text>
+</svg>
