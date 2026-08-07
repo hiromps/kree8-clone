@@ -1,36 +1,34 @@
-# Kree8 Studio — Site Reproduction
+# Social Smart — コーポレートサイト
 
-A pixel/behavior-accurate, single-file HTML reproduction of [kree8.studio](https://www.kree8.studio), built for local prototyping and design iteration.
+「**AIで、社会をスマートに**」— 自動化で、人とサービスをつなぐ [Social Smart](mailto:socialsmart.jp@gmail.com) の公式サイト。
 
-This is a static, dependency-free clone — no build step, no framework. Everything (Home, Projects, Pricing, Playground) lives in one file with simple client-side hash routing.
+Kree8 Studio のデザイン雛形(`index.html`、リポジトリ直下に参照用として保存)を **Next.js 16 (App Router / TypeScript)** に移植したもの。デザイン・レイアウト・アニメーションは雛形を完全維持し、文言とアセットのみ Social Smart 用に置き換えている。
 
-## Run it
-
-Just open `index.html` in a browser, or serve it locally:
+## 開発
 
 ```bash
-npx serve .
+npm install
+npm run dev    # http://localhost:3000
+npm run build  # 本番ビルド
+npm start      # 本番サーバー
 ```
 
-## What's inside
+## ページ構成
 
-- **Home** — hero, problem/solution narrative, moodboard, versatility/type-scale demo, project slideshow, category grid, testimonials, team, footer
-- **Projects** — filterable project list by category
-- **Pricing** — one-time and retainer pricing cards, standalone page
-- **Playground** — a pannable/zoomable canvas of project shots, with a shared sidebar that collapses to icon-only and expands on hover (mirrors the real site's DOM/CSS behavior)
+- **/** — ヒーロー、Mission、Services(ポラロイド)、Why Social Smart(タイプスペシメン)、プロダクトスライドショー、サービス領域、ご依頼の流れ、Vision、締め+フッター
+- **/products** — 全5プロダクトのスクリーンショット一覧(SMARTGRAM / anima.js / Minoru-AI / SocialGoodWorld / SMM Smart)
+- **/pricing** — HP制作パッケージ(一括)+ 月額サポートプラン
+- **/playground** — パン&ズームできるスクリーンショットボード(サイドバーはアイコンレールに収縮、ホバーで展開)
 
-## Stack
+## スタック
 
-- Tailwind CSS (CDN, JIT)
-- GSAP 3.12.5 + ScrollTrigger (CDN)
-- RemixIcon 4.2.0 (CDN)
-- Google Fonts: Inter, Caveat, Phudu
-- Vanilla JS (no build tooling) for routing, the Playground canvas, sliders, and the pricing calculator
+- Next.js 16.3 / React 19 / TypeScript
+- Tailwind CSS 3.4(雛形の Play CDN と同じ v3 系をコンパイルして使用)
+- GSAP 3.12.5 + ScrollTrigger(スクロールリビール)
+- RemixIcon 4.2 / next/font(Inter・Noto Sans JP・Caveat・Phudu)
 
-## Responsive
+## メモ
 
-Includes a mobile top bar + slide-in nav menu (sidebar is desktop/`lg:`-only), and responsive layout adjustments throughout Home (moodboard grid, project category grid, hero heading, section spacing) to avoid horizontal overflow on small screens.
-
-## Notes
-
-This repository reproduces the author's own live site (kree8.studio) for prototyping purposes.
+- ヒーロー動画は poster 先行。`public/videos/hero.mp4` を置くだけで自動再生が有効になる(コード変更不要)。
+- 画像はすべて自前アセット(実プロダクトのスクリーンショット+自作SVG)。
+- `index.html` は移植元の参照用で、サイトからは配信されない。

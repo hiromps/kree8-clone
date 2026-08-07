@@ -27,10 +27,9 @@ export function SiteChrome() {
     };
   }, [open]);
 
-  // The original menu closes itself whenever a nav link is tapped.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  // The original menu closes itself whenever a nav link is tapped; each Link's
+  // onClick below does the same.
+  const close = () => setOpen(false);
 
   return (
     <>
@@ -74,7 +73,7 @@ export function SiteChrome() {
           </div>
           <nav className="flex flex-col gap-1">
             {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} className={navLinkClass(pathname === item.href)}>
+              <Link key={item.href} href={item.href} className={navLinkClass(pathname === item.href)} onClick={close}>
                 <i className={item.iconLine}></i> <span>{item.label}</span>
               </Link>
             ))}

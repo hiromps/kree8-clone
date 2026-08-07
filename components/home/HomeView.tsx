@@ -274,9 +274,7 @@ function WhySocialSmart() {
 
 function ProductSlider() {
   const [idx, setIdx] = useState(0);
-  const idxRef = useRef(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  idxRef.current = idx;
 
   useEffect(() => {
     autoplayRef.current = setInterval(() => {
