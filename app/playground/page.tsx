@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
+import PlaygroundView from "@/components/playground/PlaygroundView";
+
+export const metadata: Metadata = {
+  title: "プレイグラウンド | Social Smart",
+};
+
 export default function PlaygroundPage() {
-  return (
-    <div className="w-full" id="view-playground">
-      {/* PlaygroundView lands here (task #7) */}
-    </div>
-  );
+  return <PlaygroundView />;
 }
