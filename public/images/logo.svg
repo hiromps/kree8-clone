@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 232 32" role="img" aria-label="Social Smart">
+  <!-- Interlocking rings: the "connection" mark -->
+  <circle cx="14" cy="16" r="9" fill="none" stroke="#1c2b3a" stroke-width="4.5"/>
+  <circle cx="27" cy="16" r="9" fill="none" stroke="#007BE5" stroke-width="4.5"/>
+  <text x="46" y="22.5" font-family="'Segoe UI',ui-sans-serif,system-ui,Arial,sans-serif" font-size="19" font-weight="800" letter-spacing="-0.4" fill="#1c2b3a">Social Smart</text>
+</svg>
