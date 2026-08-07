@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kree8 - A Creative Agency (Reproduction)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&family=Phudu:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  :root{
+    --page-bg:#eceef1;
+    --card-bg:#f3f4f6;
+    --ink:#1c2b3a;
+    --ink-2:#243447;
+    --muted:#a3b1bd;
+    --muted-2:#8b98a6;
+    --accent-green:#3fbf3f;
+    --accent-green-dark:#1f6b2c;
+    --pill-active:#e7e9ed;
+    --highlight:rgba(163,224,99,.65);
+  }
+  html,body{ margin:0; }
+  /* Prevent any stray element (decorative offsets, fixed-width rows, etc.) from
+     ever creating a page-level horizontal scrollbar, especially on mobile. */
+  html,body{ max-width:100%; overflow-x:hidden; }
+  /* Playground is a full-bleed pannable canvas, unlike the normal scrolling pages -- only
+     lock scrolling on <html>/<body> while that view is active. */
+  html.pg-mode, html.pg-mode body{ height:100%; overflow:hidden; }
+  *{font-family:'Inter',ui-sans-serif,system-ui,sans-serif;}
+  body{background:var(--page-bg); color:var(--ink);}
+  .script{font-family:'Caveat',cursive;}
+  .highlight{background:var(--highlight); padding:0 4px; border-radius:4px;}
+  .card{background:var(--card-bg); border-radius:29px; min-width:0;}
+  .pill-btn{border-radius:999px; padding:14px 22px; font-weight:600; font-size:15px; display:inline-flex; align-items:center; gap:8px; transition:transform .15s ease; cursor:pointer;}
+  .pill-btn:hover{transform:translateY(-2px);}
+  .pill-dark{background:var(--ink); color:#fff;}
+  .pill-light{background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(0,0,0,.06);}
+  .nav-link{display:flex; align-items:center; gap:10px; padding:11px 16px; border-radius:999px; color:var(--ink-2); font-size:14.5px; font-weight:500; cursor:pointer;}
+  .nav-link.active{
+    background:#fff;
+    font-weight:600;
+    box-shadow:0px 1.1px 2.75px rgba(181,187,203,.31),
+               0px 11.54px 7.15px rgba(181,188,203,.16),
+               0px 20.89px 8.25px rgba(181,188,203,.05);
+  }
+  .nav-link:hover:not(.active){background:#f2f3f5;}
+  .nav-link i, .pill-btn i{font-size:16px; width:18px; text-align:center;}
+  .pill-btn i{font-size:15px; width:auto;}
+  .nav-arrow{ display:none; }
+  .nav-link.active .nav-arrow{ display:inline-flex; }
+  .reveal{opacity:0; transform:translateY(30px);}
+
+  /* --- Mobile nav (below the lg breakpoint, where the full sidebar is hidden) --- */
+  #mobile-menu.open{ visibility:visible; }
+  #mobile-menu.open #mobile-menu-backdrop{ opacity:1; }
+  #mobile-menu.open #mobile-menu-panel{ transform:translateX(0); }
+  .polaroid{position:relative; background:#fff; padding:12px 12px 34px; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,.12); z-index:1;}
+  .caption{font-family:'Caveat',cursive; font-size:20px; text-align:center; color:#374151; margin-top:8px;}
+  .pin{position:absolute; z-index:5; font-size:26px; filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));}
+  .pin-red{color:#e53935;}
+  .pin-green{color:#43a047;}
+  .clip{position:absolute; z-index:5; font-size:26px; color:#9aa3ad; filter:drop-shadow(0 2px 2px rgba(0,0,0,.2));}
+  .doodle{position:absolute; z-index:5; font-size:18px; color:#33475b;}
+  .tape{
+    position:absolute; z-index:5;
+    width:74px; height:26px;
+    background:rgba(214,190,140,.55);
+    border:1px solid rgba(214,190,140,.3);
+    box-shadow:0 2px 4px rgba(0,0,0,.08);
+  }
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-thumb{background:#d1d5db; border-radius:10px;}
+
+  /* --- FRAGMENTATION tiles --- */
+  .frag-tile{
+    background:rgba(255,255,255,.7);
+    border-radius:10px;
+    box-shadow:0 1.1px 2.75px rgba(181,187,203,.31),
+               0 11.54px 7.15px rgba(181,188,203,.16),
+               0 20.89px 8.25px rgba(181,188,203,.05),
+               0 32.98px 9.34px rgba(181,193,203,.01);
+    transform:rotate(var(--r));
+    transition:transform .2s ease-in-out;
+    display:flex; align-items:center; justify-content:center;
+    width:34px; height:34px;
+  }
+  @media (min-width:768px){ .frag-tile{ width:44px; height:44px; } }
+  .frag-tile:hover{ transform:translateY(-6px) rotate(8.8deg); }
+
+  /* --- Team marquee --- */
+  @keyframes marquee{ 0%{ transform:translate(0%); } 100%{ transform:translate(-50%); } }
+  .animate-marquee{ animation:marquee 50s linear infinite; }
+  .marquee-mask{ mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+
+  /* --- Pricing membership cards --- */
+  .price-card{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.43), 0 30px 27px rgba(181,186,203,.31);
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:center;
+    transition:transform .25s ease;
+    transform-style:preserve-3d;
+    will-change:transform;
+  }
+  .price-card::after{
+    content:"";
+    position:absolute; inset:-40%;
+    background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.35) 45%, transparent 60%);
+    background-size:220% 220%;
+    animation:sheen 6s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes sheen{
+    0%{ background-position:200% 0%; }
+    100%{ background-position:-200% 0%; }
+  }
+  .price-card-blue{ background-image:url("https://www.kree8.studio/assets/blue-pricing.png"); background-color:#bfe0ff; }
+  .price-card-green{ background-image:url("https://www.kree8.studio/assets/green-pricing.png"); background-color:#8fe08a; }
+
+  /* --- Pricing glow wrapper --- */
+  .glow-wrap{ position:relative; }
+  .glow-wrap::before{
+    content:"";
+    position:absolute; left:5%; right:5%; bottom:-20px; height:60px;
+    background:linear-gradient(90deg,#60e0ff,#7CFF8E,#60e0ff);
+    background-size:200% 100%;
+    filter:blur(26px);
+    opacity:.55;
+    z-index:-1;
+    animation:glow-move 8s ease-in-out infinite;
+    border-radius:999px;
+  }
+  @keyframes glow-move{
+    0%,100%{ background-position:0% 50%; }
+    50%{ background-position:100% 50%; }
+  }
+
+  /* --- Video controls --- */
+  .video-ctrl{
+    background:#fff;
+    color:#304F67;
+    font-size:14px;
+    font-weight:500;
+    box-shadow:0px 1.67px 4.18px rgba(181,187,203,.31),
+               0px 17.57px 10.88px rgba(181,188,203,.16),
+               0px 31.8px 12.61px rgba(181,188,203,.05);
+    transition:transform .15s ease;
+  }
+  .video-ctrl:hover{ transform:translateY(-2px); }
+  .video-ctrl i{ font-size:18px; }
+
+  /* --- Type scale picker --- */
+  .type-specimen-card{ background:repeating-linear-gradient(135deg, rgba(0,0,0,.015) 0 1px, transparent 1px 12px); }
+  .size-btn{ font-weight:500; cursor:pointer; background:transparent; border:none; }
+  .size-btn.active{ color:#fff; background:var(--ink); font-weight:600; }
+
+  /* --- Project slideshow --- */
+  .slide-img{ transition:opacity .5s ease; }
+  .slider-dot{ width:6px; height:6px; border-radius:999px; background:rgba(255,255,255,.5); transition:all .25s ease; }
+  .slider-dot.active{ width:16px; background:#fff; }
+
+  /* --- Pricing section (matches real DOM/classes) --- */
+  .price-font{ font-family:'Phudu','Inter',sans-serif; font-weight:800; }
+  .pricing-card{
+    max-width:860px; width:100%; border-radius:32px; background:rgba(255,255,255,.7);
+    box-shadow:0px 1.67px 4.18px rgba(181,186,203,.31),
+               0px 17.57px 10.88px rgba(181,187,203,.16),
+               0px 31.8px 12.55px rgba(181,187,203,.05),
+               0px 50.2px 14.23px rgba(181,193,203,.01);
+  }
+  .row-box{ background:rgba(240,240,240,.82); border-radius:18px; padding:13px; }
+  .tab-btn{ padding:16px 22px; border-radius:999px; font-weight:600; font-size:14.5px; border:1px solid #e3e5e8; color:#8b98a6; background:transparent; cursor:pointer; transition:all .2s ease; white-space:nowrap; }
+  .tab-btn.active{
+    background:#f0f2f5; color:var(--ink); border-color:transparent;
+    box-shadow:0px 1.67px 4.18px rgba(181,186,203,.31), 0px 17.57px 10.88px rgba(181,187,203,.16);
+  }
+  .toggle-switch{ width:40px; height:22px; border-radius:999px; background:#d9dce1; position:relative; transition:background .2s ease; flex-shrink:0; }
+  .toggle-switch::after{ content:""; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:999px; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition:transform .2s ease; }
+  .toggle-switch.on{ background:var(--ink); }
+  .toggle-switch.on::after{ transform:translateX(18px); }
+  .qty-pill{ display:flex; align-items:center; gap:6px; background:#e4f5e0; border-radius:999px; padding:4px; }
+  .qty-pill button{ width:22px; height:22px; border-radius:999px; background:#fff; display:flex; align-items:center; justify-content:center; font-size:12px; color:#237F00; }
+
+  /* --- Projects category tabs (matches real DOM/classes) --- */
+  .cat-tab{
+    padding:16px 22px; border-radius:999px; font-weight:500; font-size:15.5px;
+    color:#304F67; background:transparent; cursor:pointer; white-space:nowrap;
+    transition:all .2s ease;
+  }
+  .cat-tab.active{
+    background:rgba(255,255,255,.7);
+    box-shadow:0px 1.67px 4.18px rgba(181,186,203,.31),
+               0px 17.57px 10.88px rgba(181,187,203,.16),
+               0px 31.8px 12.55px rgba(181,187,203,.05);
+  }
+
+  /* --- Project showcase card (Projects/Websites listing) --- */
+  .project-card{
+    width:100%; max-width:1100px; margin:0 auto;
+    background:#efefef; border-radius:29px; overflow:hidden;
+    box-shadow:0px 1.67px 4.18px rgba(183,181,203,.31),
+               0px 17.57px 10.88px rgba(183,181,203,.16),
+               0px 31.8px 12.55px rgba(183,181,203,.05);
+  }
+  .project-card img{ display:block; width:100%; height:auto; }
+
+  /* ========================================================================
+     PLAYGROUND -- full-bleed pannable canvas, shown inside the same shared
+     sidebar component as every other page.
+
+     Measured directly from the real kree8.studio/playground DOM: the sidebar's
+     own box NEVER changes size (always the same width, position:fixed, a single
+     constant background gradient). The "icon-only vs. expanded" look comes
+     purely from (a) each nav-link hugging just its icon's width instead of
+     stretching full-width, and (b) the label text only being visible on hover.
+     That's why our earlier attempts (animating the aside's own width) always
+     looked wrong -- we've matched the real mechanism here instead.
+     ==================================================================== */
+  #site-aside.pg-collapsed{
+    position:fixed !important;
+    left:0; top:0;
+    height:100dvh !important;
+    z-index:50;
+    overflow:visible;
+    /* Real site's exact gradient (converted from its 270deg/right-to-left notation): opaque
+       flat through the first 40%, fading to fully transparent by the right edge. */
+    background:linear-gradient(to right, rgb(232,232,232) 0%, rgb(232,232,232) 40%, rgba(232,232,232,0) 100%);
+  }
+  /* Nav rows hug their icon's width instead of stretching to fill the sidebar -- this alone is
+     what makes the rail read as "icon-only" even though the box behind it is always full width. */
+  #site-aside.pg-collapsed .nav-link{ width:fit-content; max-width:100%; }
+  #site-aside.pg-collapsed .nav-label,
+  #site-aside.pg-collapsed .nav-arrow,
+  #site-aside.pg-collapsed .nav-badge{
+    display:inline-block;
+    max-width:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-width .2s ease-in-out, opacity .15s ease;
+  }
+  #site-aside.pg-collapsed:hover .nav-label{ max-width:170px; opacity:1; transition-delay:.05s; }
+  #site-aside.pg-collapsed:hover .nav-arrow{ max-width:24px; opacity:1; transition-delay:.05s; }
+  #site-aside.pg-collapsed:hover .nav-badge{ max-width:90px; opacity:1; transition-delay:.05s; }
+  #site-aside.pg-collapsed .aside-heading,
+  #site-aside.pg-collapsed .aside-brands{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    margin-top:0; margin-bottom:0;
+    transition:max-height .2s ease-in-out, opacity .15s ease;
+  }
+  #site-aside.pg-collapsed:hover .aside-heading{ max-height:24px; opacity:1; margin-bottom:12px; transition-delay:.05s; }
+  #site-aside.pg-collapsed:hover .aside-brands{ max-height:130px; opacity:1; transition-delay:.05s; }
+  /* Logo swaps to the compact chameleon mark while collapsed, back to the full "KREE8"
+     wordmark on hover -- exactly like the real rail. */
+  .aside-logo-compact{ display:none; }
+  #site-aside.pg-collapsed .aside-logo-compact{ display:block; }
+  #site-aside.pg-collapsed .aside-logo-full{ display:none; }
+  #site-aside.pg-collapsed:hover .aside-logo-compact{ display:none; }
+  #site-aside.pg-collapsed:hover .aside-logo-full{ display:block; }
+
+  /* Positioning context for #pg-viewport's inset:0 below. */
+  #view-playground{ position:relative; }
+
+  /* Real /playground uses a static "move" cursor over the whole pannable surface (never a
+     grab/grabbing hand, and it doesn't change while actively dragging). It spans the full
+     viewport at all times -- the fixed sidebar simply paints on top of its left edge, and real
+     board content is genuinely visible through the transparent part of the gradient. */
+  #pg-viewport{
+    position:absolute; inset:0;
+    overflow:hidden; cursor:move; z-index:0;
+    background-color:#eceef1;
+    background-image:radial-gradient(circle, rgba(28,43,58,.16) 1.4px, transparent 1.4px);
+    background-size:26px 26px;
+  }
+  #pg-canvas{
+    position:absolute; top:0; left:0;
+    /* Pan/zoom math assumes scaling happens from the top-left corner (screenX = tx + x*scale).
+       CSS defaults transform-origin to the element's center, which throws every tx/ty
+       calculation off by a large, scale-dependent amount -- pin it to top-left so the math is exact. */
+    transform-origin:0 0;
+    will-change:transform;
+  }
+  .pg-card{
+    position:absolute;
+    border-radius:26px;
+    border:4.5px solid #fff;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 1.1px 2.75px rgba(181,187,203,.31),
+               0 11.54px 7.15px rgba(181,188,203,.16),
+               0 20.89px 8.25px rgba(181,188,203,.05),
+               0 32.98px 9.34px rgba(181,193,203,.01);
+    transform:rotate(var(--r, 0deg)) scale(1);
+    transition:transform .5s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, opacity .6s ease;
+    z-index:0;
+    cursor:move;
+    opacity:0;
+  }
+  .pg-card.in{ opacity:1; }
+  .pg-card:not(.in){ transform:rotate(var(--r, 0deg)) scale(.82) translateY(18px); }
+  .pg-card:hover{
+    transform:rotate(0deg) scale(1.05);
+    z-index:10;
+    box-shadow:0 4px 10px rgba(181,187,203,.35),
+               0 25px 24px rgba(181,188,203,.22),
+               0 40px 34px rgba(181,188,203,.1),
+               0 60px 40px rgba(181,193,203,.04);
+  }
+  .pg-card img{
+    display:block; width:100%; height:100%; object-fit:cover; pointer-events:none; user-select:none;
+    transition:transform .5s ease;
+  }
+  .pg-card:hover img{ transform:scale(1.06); }
+
+  .zoom-btn{
+    width:30px; height:30px; border-radius:999px; display:flex; align-items:center; justify-content:center;
+    color:var(--ink-2); font-size:16px; transition:background .15s ease;
+  }
+  .zoom-btn:hover{ background:#f0f2f5; }
+  #zoom-reset{ color:var(--ink); cursor:pointer; border-radius:999px; padding-top:5px; padding-bottom:5px; transition:background .15s ease; }
+  #zoom-reset:hover{ background:#f0f2f5; }
+</style>
+</head>
+<body class="min-h-screen">
+
+<!-- ============================================================
+     MOBILE NAV -- the full sidebar is "hidden lg:flex" (desktop-only), so below the
+     lg breakpoint this fixed top bar + slide-in menu is the only way to navigate.
+     Reuses the exact same .nav-link markup/styles and data-view routing as the
+     desktop sidebar; the router's [data-view] click handler and setActiveNav()
+     already pick these elements up automatically, no extra JS needed for that part.
+     ============================================================ -->
+<div id="mobile-topbar" class="lg:hidden fixed top-0 left-0 right-0 z-[70] flex items-center justify-between px-4 h-14 bg-white/90 backdrop-blur border-b border-gray-200">
+  <a href="#home" data-view="home" class="flex items-center">
+    <img src="https://www.kree8.studio/assets/logo.svg" alt="Kree8" class="h-6" />
+  </a>
+  <button id="mobile-menu-btn" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100" aria-label="Open menu">
+    <i class="ri-menu-line text-xl"></i>
+  </button>
+</div>
+
+<div id="mobile-menu" class="lg:hidden fixed inset-0 z-[80] invisible">
+  <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-200"></div>
+  <div id="mobile-menu-panel" class="absolute top-0 right-0 h-full w-[78%] max-w-[300px] bg-white p-6 flex flex-col shadow-2xl translate-x-full transition-transform duration-200 ease-out">
+    <div class="flex items-center justify-between mb-8">
+      <img src="https://www.kree8.studio/assets/logo.svg" alt="Kree8" class="h-6" />
+      <button id="mobile-menu-close" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100" aria-label="Close menu"><i class="ri-close-line text-xl"></i></button>
+    </div>
+    <nav class="flex flex-col gap-1">
+      <a href="#home" data-view="home" class="nav-link"><i class="ri-home-5-line"></i> <span>Home</span></a>
+      <a href="#projects" data-view="projects" class="nav-link"><i class="ri-book-open-line"></i> <span>Projects</span></a>
+      <a href="#playground" data-view="playground" class="nav-link"><i class="ri-gamepad-line"></i> <span>Playground</span></a>
+      <a href="#pricing" data-view="pricing" class="nav-link"><i class="ri-money-dollar-circle-line"></i> <span>Pricing</span></a>
+      <a href="#" class="nav-link"><i class="ri-briefcase-line"></i> <span>Career</span> <span class="ml-auto text-[10px] bg-gray-200 rounded-full px-2 py-0.5 text-gray-500">Coming soon</span></a>
+    </nav>
+    <div class="mt-auto flex flex-col gap-2">
+      <a href="#" class="nav-link !text-[var(--ink)] font-semibold"><i class="ri-vidicon-line"></i> <span>Book a Call</span></a>
+      <a href="https://t.me/jaydwivedidesign" target="_blank" class="nav-link !text-[var(--ink)] font-semibold"><i class="ri-send-plane-2-line"></i> <span>Send a Message</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     Home, Projects, Pricing and Playground all share this one sidebar;
+     the router below swaps which view is visible inside <main>.
+     ============================================================ -->
+<div id="layout-standard" class="flex w-full">
+
+  <!-- SIDEBAR (shared across every view). On Playground only, the router adds .pg-collapsed:
+       icon-only by default, hover-expands with a transparent left-dense/right-light gradient. -->
+  <aside id="site-aside" class="hidden lg:flex flex-col w-[260px] shrink-0 px-6 py-8 sticky top-0 h-screen">
+    <a href="#home" data-view="home" class="flex items-center gap-2 mb-10 aside-logo-row">
+      <img src="https://www.kree8.studio/assets/logo-blue.svg" alt="Kree8" class="h-7 aside-logo-compact" />
+      <img src="https://www.kree8.studio/assets/logo.svg" alt="Kree8" class="h-7 aside-logo-full" />
+    </a>
+
+    <nav class="flex flex-col gap-1 mb-8">
+      <a href="#home" data-view="home" data-icon-line="ri-home-5-line" data-icon-fill="ri-home-5-fill" class="nav-link"><i class="ri-home-5-line"></i> <span class="nav-label">Home</span> <span class="ml-auto opacity-60 nav-arrow"><i class="ri-arrow-right-line"></i></span></a>
+      <a href="#projects" data-view="projects" data-icon-line="ri-book-open-line" data-icon-fill="ri-book-open-fill" class="nav-link"><i class="ri-book-open-line"></i> <span class="nav-label">Projects</span> <span class="ml-auto opacity-60 nav-arrow"><i class="ri-arrow-right-line"></i></span></a>
+      <a href="#playground" data-view="playground" class="nav-link"><i class="ri-gamepad-line"></i> <span class="nav-label">Playground</span></a>
+      <a href="#pricing" data-view="pricing" data-icon-line="ri-money-dollar-circle-line" data-icon-fill="ri-money-dollar-circle-fill" class="nav-link"><i class="ri-money-dollar-circle-line"></i> <span class="nav-label">Pricing</span> <span class="ml-auto opacity-60 nav-arrow"><i class="ri-arrow-right-line"></i></span></a>
+      <a href="#" class="nav-link"><i class="ri-briefcase-line"></i> <span class="nav-label">Career</span> <span class="ml-auto text-[10px] bg-gray-200 rounded-full px-2 py-0.5 text-gray-500 nav-badge">Coming soon</span></a>
+    </nav>
+
+    <div class="text-[11px] tracking-wider text-gray-400 font-semibold mb-3 px-2 aside-heading">START PROJECT</div>
+    <div class="flex flex-col gap-2 mb-10">
+      <a href="#" class="nav-link !text-[var(--ink)] font-semibold"><i class="ri-vidicon-line"></i> <span class="nav-label">Book a Call</span></a>
+      <a href="https://t.me/jaydwivedidesign" target="_blank" class="nav-link !text-[var(--ink)] font-semibold"><i class="ri-send-plane-2-line"></i> <span class="nav-label">Send a Message</span></a>
+    </div>
+
+    <div class="mt-auto aside-brands">
+      <div class="text-[11px] tracking-wider text-gray-400 font-semibold mb-3 px-2">WORKED WITH <span class="text-gray-600">130+ BRANDS</span></div>
+      <div class="grid grid-cols-2 gap-3 px-2 opacity-80">
+        <img src="https://www.kree8.studio/assets/brands/contra.svg" class="h-4" />
+        <img src="https://www.kree8.studio/assets/brands/opptics.svg" class="h-4" />
+        <img src="https://www.kree8.studio/assets/brands/cluely.svg" class="h-4" />
+        <img src="https://www.kree8.studio/assets/brands/terac.svg" class="h-4" />
+        <img src="https://www.kree8.studio/assets/brands/timefun.svg" class="h-4" />
+        <img src="https://www.kree8.studio/assets/brands/bags.svg" class="h-4" />
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="site-main" class="flex-1 flex justify-center py-6 px-6 md:px-10 min-w-0">
+
+    <!-- ================= HOME VIEW ================= -->
+    <div class="card p-6 md:p-14 w-full max-w-[1040px]" id="view-home">
+
+      <!-- HERO -->
+      <section id="home" class="pb-10">
+        <p class="text-[13px] tracking-wide text-gray-500 font-medium mb-4">HELPED 50+ FOUNDERS RAISE <span class="text-[var(--ink)] font-bold">$200M+</span></p>
+        <h1 class="text-[28px] sm:text-[34px] md:text-[52px] leading-[1.15] font-bold max-w-3xl mb-8">
+          <span class="text-[var(--ink)]">The <i class="ri-shape-2-fill inline-block align-middle" style="color:#3fbf3f; font-size:0.75em;"></i> studio</span>
+          <span class="text-[var(--muted)]"> for brands</span>
+          <span class="text-[var(--muted)]"> who simply </span>
+          <span class="text-[var(--ink)]">can't afford to be average</span>
+        </h1>
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="#" class="pill-btn pill-light"><i class="ri-vidicon-line"></i> Book a Call</a>
+          <a href="#projects" data-view="projects" class="pill-btn pill-light"><i class="ri-folder-open-line"></i> See Projects</a>
+        </div>
+
+        <div class="rounded-[28px] bg-[#f5f6f8] p-2 max-w-4xl shadow-lg reveal" id="hero-video-wrap">
+          <div class="relative rounded-[22px] overflow-hidden aspect-video">
+            <video id="hero-video" class="w-full h-full object-cover" autoplay muted loop playsinline>
+              <source src="https://kree8.b-cdn.net/KREE8%20MOTION%20part%202K_20-01-26%20v3_3.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="flex items-center justify-between gap-2 px-2 py-3">
+            <button id="video-play-btn" class="video-ctrl w-12 h-12 !p-0 rounded-full flex items-center justify-center">
+              <i id="video-play-icon" class="ri-pause-fill text-lg"></i>
+            </button>
+            <button id="video-mute-btn" class="video-ctrl md:w-[122px] px-5 md:px-0 py-3.5 rounded-full flex items-center justify-center gap-1.5">
+              <i id="video-mute-icon" class="ri-volume-mute-line"></i>
+              <span id="video-mute-label">Mute</span>
+            </button>
+            <button id="video-fs-btn" class="video-ctrl max-md:hidden w-[167px] py-4 rounded-full flex items-center justify-center gap-2 ml-auto">
+              <i class="ri-fullscreen-line"></i>
+              <span>Full Screen</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROBLEM -->
+      <section class="py-10 sm:py-16 max-w-3xl reveal">
+        <p class="text-lg md:text-xl leading-relaxed text-[var(--ink-2)]">
+          We too love the process of building a product of our own.... An Idea, a sketch, a feeling that this could become something real <i class="ri-smartphone-line"></i>
+        </p>
+        <p class="text-lg md:text-xl leading-relaxed text-[var(--ink-2)] mt-6">
+          But then came the hard part.... <span class="highlight font-semibold">"Finding designers."</span>
+        </p>
+        <p class="text-lg md:text-xl leading-relaxed text-[var(--muted-2)] mt-6">
+          Explaining the vision again and again and again and again...<br/>
+          One person for UI, Another for branding,<br/>
+          Someone else for motion.<br/>
+          Compromising, co-ordinating, waiting…
+        </p>
+        <p class="text-lg md:text-xl leading-relaxed text-[var(--muted-2)] mt-6">
+          Somewhere along the way, the product starts to feel less exciting, and trust us it's not you or the designers.
+        </p>
+
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mt-14 mb-4">What's the real Problem?</p>
+        <div class="flex items-center gap-1 md:gap-1.5 flex-wrap mb-8">
+          <span class="text-lg font-semibold text-[var(--ink)] mr-2">It's</span>
+          <div class="frag-tiles flex gap-1 md:gap-1.5 flex-wrap"></div>
+        </div>
+        <ul class="text-lg text-[var(--muted-2)] space-y-2">
+          <li>— Too many people</li>
+          <li>— Too many tools</li>
+          <li>— Too many opinions</li>
+        </ul>
+
+        <p class="text-2xl md:text-3xl font-semibold mt-14 leading-snug">
+          Design isn't meant to be stitched together. It's meant to move <span class="highlight">as ONE</span>
+        </p>
+      </section>
+
+      <!-- SOLUTION / MOODBOARD -->
+      <section class="py-10 sm:py-16 reveal">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-4">WHAT'S THE SOLUTION?</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-12 flex items-center flex-wrap gap-2">
+          That's why we built <img src="https://www.kree8.studio/assets/logo-blue.svg" class="h-6 inline" /> <span>KREE8</span>
+        </h2>
+
+        <div class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-10 max-w-4xl">
+          <!-- Col 1: Feels fresh (tall) + Brand Feel (short) -->
+          <div class="flex flex-col gap-3 sm:gap-6 md:gap-10">
+            <div class="polaroid -rotate-3">
+              <i class="ri-pushpin-2-fill pin pin-red" style="top:-16px; right:14px; transform:rotate(20deg);"></i>
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-1.png&w=640&q=75" class="w-full h-24 sm:h-52 md:h-64 object-cover rounded" />
+              <p class="caption">Feels fresh…..</p>
+              <div class="tape" style="left:-20px; bottom:36px; transform:rotate(-40deg);"></div>
+            </div>
+            <div class="polaroid rotate-2">
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-2.png&w=640&q=75" class="w-full h-14 sm:h-20 object-cover rounded" />
+              <p class="caption">Brand Feel</p>
+            </div>
+          </div>
+
+          <!-- Col 2: Icon/Face (top) + Posters (bottom) -->
+          <div class="flex flex-col gap-3 sm:gap-6 md:gap-10">
+            <div class="polaroid rotate-3">
+              <i class="ri-attachment-2 clip" style="top:-14px; left:8px; transform:rotate(-25deg);"></i>
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-3.png&w=640&q=75" class="w-full h-16 sm:h-32 object-cover rounded" />
+              <p class="caption">Icon/Face</p>
+            </div>
+            <div class="polaroid -rotate-2">
+              <i class="ri-attachment-2 clip" style="top:-14px; right:10px; transform:rotate(35deg);"></i>
+              <i class="ri-pencil-fill doodle" style="bottom:24px; left:-10px; transform:rotate(-35deg);"></i>
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-4.png&w=640&q=75" class="w-full h-16 sm:h-32 object-cover rounded" />
+              <p class="caption">Posters</p>
+            </div>
+          </div>
+
+          <!-- Col 3: Our Motto (top) + Just a number (bottom) -->
+          <div class="flex flex-col gap-3 sm:gap-6 md:gap-10">
+            <div class="polaroid -rotate-2">
+              <i class="ri-pushpin-2-fill pin pin-green" style="top:-16px; left:50%; transform:translateX(-50%) rotate(-10deg);"></i>
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-5.png&w=640&q=75" class="w-full h-16 sm:h-32 object-cover rounded" />
+              <p class="caption">Our Motto</p>
+            </div>
+            <div class="polaroid rotate-3">
+              <i class="ri-attachment-2 clip" style="top:-14px; right:10px; transform:rotate(30deg);"></i>
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fhome%2Fframe-6.png&w=384&q=75" class="w-full h-16 sm:h-32 object-cover rounded" />
+              <p class="caption">Just a number :)</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-2xl md:text-3xl font-semibold mt-16 max-w-2xl leading-snug">
+          Not as another agency. Not as a marketplace of freelancers… But as one team that sees <span class="highlight">the whole picture</span>
+        </p>
+      </section>
+
+      <!-- ABOUT / VERSATILITY -->
+      <section class="py-10 sm:py-16 reveal">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-4">ABOUT KREE8</p>
+        <p class="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-10">
+          There's a reason our logo is a <img src="https://www.kree8.studio/assets/logo-blue.svg" class="h-6 inline mx-1" /> Chameleon. They are known for one thing:
+        </p>
+
+        <div class="type-specimen-card border border-dashed border-gray-300 rounded-2xl p-6 md:p-8 mb-10">
+          <div class="flex items-center gap-6 flex-wrap mb-6">
+            <span id="type-specimen" class="font-extrabold leading-none transition-all duration-300" style="font-size:48px;">Aa</span>
+            <div>
+              <p class="font-semibold">Inter</p>
+              <p class="text-gray-400 text-sm">Regular</p>
+            </div>
+          </div>
+          <div id="size-picker" class="flex items-end gap-1.5 flex-wrap"></div>
+        </div>
+
+        <h3 class="text-3xl md:text-4xl font-bold mb-6">Versatility</h3>
+        <p class="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">
+          That's how we approach design. We don't force one "Kree8 style" onto everything...
+        </p>
+        <p class="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">
+          Different products. Different audiences. Different energy.
+        </p>
+        <p class="text-lg text-[var(--ink-2)] font-medium max-w-2xl leading-relaxed">
+          Same level of care. See it yourself :)
+        </p>
+      </section>
+
+      <!-- PROJECT SLIDESHOW -->
+      <section class="pb-10 reveal">
+        <div id="project-slider" class="relative w-full rounded-2xl overflow-hidden aspect-[1036/742] shadow-lg">
+          <img data-slide src="https://www.kree8.studio/assets/projects/anything/512.png" class="slide-img absolute inset-0 w-full h-full object-cover" style="opacity:1;" />
+          <img data-slide src="https://www.kree8.studio/assets/projects/slack/512.png" class="slide-img absolute inset-0 w-full h-full object-cover" style="opacity:0;" />
+          <img data-slide src="https://www.kree8.studio/assets/projects/orion/512.png" class="slide-img absolute inset-0 w-full h-full object-cover" style="opacity:0;" />
+          <img data-slide src="https://www.kree8.studio/assets/projects/health/512.png" class="slide-img absolute inset-0 w-full h-full object-cover" style="opacity:0;" />
+          <img data-slide src="https://www.kree8.studio/assets/projects/crm/512.png" class="slide-img absolute inset-0 w-full h-full object-cover" style="opacity:0;" />
+          <button id="slider-next" class="w-10 h-10 rounded-full bg-black/20 hover:bg-black/35 flex items-center justify-center cursor-pointer absolute right-5 top-1/2 -translate-y-1/2 z-10 transition-colors">
+            <i class="ri-arrow-right-s-line text-white text-2xl"></i>
+          </button>
+          <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10" id="slider-dots"></div>
+        </div>
+      </section>
+
+      <!-- PROJECT CATEGORIES -->
+      <section id="projects" class="py-10 sm:py-16 reveal">
+        <div class="max-w-[700px] mx-auto w-full grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-y-7">
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/apps.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Mobile App</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/web.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Web App</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/website.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Website</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/branding.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Branding</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/logo.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Logo</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/dev.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Development</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/pitch.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Pitch Decks</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/app-shots.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">App Shots</span>
+          </div>
+          <div class="group flex flex-col items-center justify-center cursor-pointer">
+            <img src="https://www.kree8.studio/assets/projects/animation.svg" class="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110" /><span class="text-[#304F67] text-base font-normal">Animation</span>
+          </div>
+          <a href="#projects" data-view="projects" class="flex flex-col items-center h-[118px] justify-center hover:bg-[#e8e8e8] transition-colors duration-150 rounded-3xl">
+            <i class="ri-folder-open-fill text-[#3b82f6] mb-1" style="font-size:44px;"></i>
+            <span class="text-[#304F67] text-base font-normal">See all Projects</span>
+          </a>
+        </div>
+
+        <p class="text-2xl md:text-3xl font-semibold mt-16 max-w-xl leading-snug">
+          Okay, so you probably seen enough by now. The work makes sense. The approach feels familiar. And the process doesn't feel heavy.
+        </p>
+      </section>
+
+      <!-- TESTIMONIALS -->
+      <section class="py-10 sm:py-16 reveal">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-2">Still in doubt?</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-10">Testimonial</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden aspect-[3/4] bg-black">
+              <video class="w-full h-full object-cover opacity-90" muted loop playsinline>
+                <source src="https://kree8.b-cdn.net/Testimonials/SGvTnk5s692WcEpTT39tXoWC2mk.mp4" type="video/mp4" />
+              </video>
+              <div class="absolute inset-0 flex items-center justify-center text-white text-4xl"><i class="ri-play-circle-fill"></i></div>
+            </div>
+            <p class="text-sm font-semibold mt-2">Roy Lee</p>
+            <p class="text-xs text-gray-400">Founder of Cluely</p>
+          </div>
+          <div>
+            <div class="relative rounded-2xl overflow-hidden aspect-[3/4] bg-black">
+              <video class="w-full h-full object-cover opacity-90" muted loop playsinline>
+                <source src="https://kree8.b-cdn.net/Testimonials/q6OTwQDRNYrdhBVsobABJVZRUJI.mp4" type="video/mp4" />
+              </video>
+              <div class="absolute inset-0 flex items-center justify-center text-white text-4xl"><i class="ri-play-circle-fill"></i></div>
+            </div>
+            <p class="text-sm font-semibold mt-2">Harsh</p>
+            <p class="text-xs text-gray-400">Outreachify Founder</p>
+          </div>
+          <div>
+            <div class="relative rounded-2xl overflow-hidden aspect-[3/4] bg-black">
+              <video class="w-full h-full object-cover opacity-90" muted loop playsinline>
+                <source src="https://kree8.b-cdn.net/Testimonials/QsmhEc4qpv51dfk3tLWFFlt1f3k.mp4" type="video/mp4" />
+              </video>
+              <div class="absolute inset-0 flex items-center justify-center text-white text-4xl"><i class="ri-play-circle-fill"></i></div>
+            </div>
+            <p class="text-sm font-semibold mt-2">Hunter</p>
+            <p class="text-xs text-gray-400">Founder of Profitable</p>
+          </div>
+          <div>
+            <div class="relative rounded-2xl overflow-hidden aspect-[3/4] bg-black">
+              <video class="w-full h-full object-cover opacity-90" muted loop playsinline>
+                <source src="https://kree8.b-cdn.net/Testimonials/wWhSE0iTWhWdXm3aeG2yLmbjizM.mp4" type="video/mp4" />
+              </video>
+              <div class="absolute inset-0 flex items-center justify-center text-white text-4xl"><i class="ri-play-circle-fill"></i></div>
+            </div>
+            <p class="text-sm font-semibold mt-2">Greg V</p>
+            <p class="text-xs text-gray-400">COO of Numbers</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section class="py-10 sm:py-16 reveal">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-2">Who are we</p>
+        <p class="text-2xl md:text-3xl font-semibold mb-10">Kree8 is led by Jay and Satya.</p>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-14">
+          <div class="bg-white rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-2">
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fjay.png&w=96&q=75" class="w-10 h-10 rounded-full" />
+              <div>
+                <p class="font-semibold">Jay</p>
+                <a href="https://x.com/jaydwivedi_" class="text-xs text-gray-400">@jaydwivedi_</a>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-2">
+              <img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fsatya.png&w=96&q=75" class="w-10 h-10 rounded-full" />
+              <div>
+                <p class="font-semibold">Satya</p>
+                <a href="https://x.com/heysatya_" class="text-xs text-gray-400">@heysatya_</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-lg text-[var(--ink-2)] font-medium mb-2">Designers first. Founders second.</p>
+        <p class="text-lg text-[var(--muted-2)] max-w-xl mb-14 leading-relaxed">Careful about the details that matter. If something doesn't feel right, we don't ship it. Our team is small and close-knit. Designers with different strengths, and a shared sense of taste.</p>
+
+        <div class="marquee-mask overflow-hidden w-full">
+          <div class="team-track flex gap-6 w-max animate-marquee"></div>
+        </div>
+      </section>
+
+      <!-- FINAL NOTE -->
+      <section class="py-10 sm:py-16 reveal">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-6">Final Note</p>
+        <p class="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-6">
+          Kree8 is for founders who care about how people perceive their brand, about how a good design impact on <span class="highlight">conversion and customer experience</span>.
+        </p>
+        <p class="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
+          If that's you, we'll make sure you don't have to worry about the brand in terms of designs that's our promise..
+        </p>
+        <p class="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
+          You don't need ten tools. You don't need to overthink this. You just need <span class="highlight">Kree8</span>
+        </p>
+
+        <div class="flex flex-wrap gap-6 sm:gap-10 mb-12">
+          <div><p class="script text-3xl">Jay Dwivedi</p><p class="text-xs text-gray-400">Co-founder</p></div>
+          <div><p class="script text-3xl">Satya</p><p class="text-xs text-gray-400">Co-founder</p></div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a href="#" class="pill-btn pill-light"><i class="ri-vidicon-line"></i> Book a Call</a>
+          <a href="#projects" data-view="projects" class="pill-btn pill-dark"><i class="ri-folder-open-line"></i> See Projects</a>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="pt-10 pb-4 border-t border-gray-200 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500">
+        <div class="flex gap-6">
+          <a href="#pricing" data-view="pricing" class="hover:text-[var(--ink)]">Pricing</a>
+          <a href="#projects" data-view="projects" class="hover:text-[var(--ink)]">Our Works</a>
+          <a href="https://x.com/letskree8" class="hover:text-[var(--ink)]">Follow on X</a>
+        </div>
+        <p>© 2026 Kree8 | All rights reserved</p>
+      </footer>
+
+    </div>
+
+    <!-- ================= PROJECTS VIEW (Websites) ================= -->
+    <div class="card p-6 md:p-10 w-full max-w-[1180px]" id="view-projects" style="display:none;">
+
+      <!-- CATEGORY TABS -->
+      <div class="flex items-center justify-center flex-wrap gap-1 mb-8">
+        <a href="#" class="cat-tab">Mobile Apps</a>
+        <a href="#" class="cat-tab">Web Apps</a>
+        <a href="#" class="cat-tab active">Websites</a>
+        <a href="#" class="cat-tab">Branding</a>
+        <a href="#" class="cat-tab">App Store Screenshots</a>
+        <a href="#" class="cat-tab">Animation Videos</a>
+      </div>
+
+      <!-- PROJECT LIST -->
+      <div class="flex flex-col gap-5" id="project-list"></div>
+
+    </div>
+
+    <!-- ================= PRICING VIEW (independent page, not an anchor scroll) ================= -->
+    <div class="card p-6 md:p-14 w-full max-w-[1040px]" id="view-pricing" style="display:none;">
+      <section class="py-6">
+        <p class="text-sm tracking-wide text-gray-400 font-semibold mb-4">PRICING</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-2">Pricing</h2>
+        <p class="text-gray-500 max-w-lg mb-10">You can choose between One-time plan, or a Retainer plan (fixed monthly price), whatever works best for you.</p>
+
+        <div class="flex gap-2.5 flex-wrap mb-10" id="pricing-tabs">
+          <button class="tab-btn active" data-tab="landing">Landing Page</button>
+          <button class="tab-btn" data-tab="branding">Branding</button>
+          <button class="tab-btn" data-tab="animation">Product Animation (2D/3D)</button>
+          <button class="tab-btn" data-tab="mobile">Mobile App Design</button>
+        </div>
+
+        <div class="flex flex-col items-center gap-7 w-full">
+        <!-- One-time card -->
+        <div class="pricing-card p-4 md:p-7">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-4">
+              <div class="flex items-center gap-2 flex-wrap mb-1">
+                <p class="font-extrabold text-lg">LANDING PAGE</p>
+                <span class="flex items-center gap-1 text-xs text-gray-400 border border-gray-200 rounded-full px-2.5 py-1"><i class="ri-time-line"></i> 15-20 Days</span>
+              </div>
+
+              <button type="button" id="add-dev-toggle" class="row-box flex items-start justify-between text-left w-full">
+                <span>
+                  <span class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]">Add Development
+                    <img src="https://www.kree8.studio/assets/icons/nextjs.svg" class="h-4" />
+                    <img src="https://www.kree8.studio/assets/icons/framer.svg" class="h-4" />
+                    <img src="https://www.kree8.studio/assets/icons/webflow.svg" class="h-4" />
+                  </span>
+                  <span class="block text-sm text-gray-400 mt-1">+$2,799</span>
+                </span>
+                <span class="toggle-switch" id="add-dev-switch"></span>
+              </button>
+
+              <div class="row-box flex items-center justify-between">
+                <span class="text-[15px] font-medium text-[#304F67]">Extra Pages</span>
+                <span class="text-sm text-gray-400">+$800<span class="text-[var(--ink)] font-semibold">/PAGE</span></span>
+              </div>
+
+              <div class="row-box flex items-center justify-between">
+                <span class="text-[15px] font-medium text-[#304F67]">Animations</span>
+                <span class="text-sm text-gray-400">+$800<span class="text-[var(--ink)] font-semibold">/ANIM</span></span>
+              </div>
+
+              <ul class="flex flex-col gap-3 mt-1">
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Custom Wireframe/Layout</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Desktop, Tablet, Mobile Responsive</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Figma File</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> No Limit to revisions</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Updates every 48 hours</li>
+              </ul>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <div class="price-card price-card-blue h-[237px] p-5 flex flex-col justify-between" data-tilt>
+                <p class="font-extrabold text-xl text-white/50 relative z-10">KREE8</p>
+                <div class="relative z-10">
+                  <p class="text-xs tracking-widest text-[#0a3a63]/70 font-semibold mb-1">LANDING PAGE DESIGN</p>
+                  <p class="price-font text-[30px] sm:text-[40px] leading-[40px]" style="color:#007BE5;">$5,149</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <a href="https://t.me/jaydwivedidesign" class="pill-btn pill-dark flex-1 justify-center"><i class="ri-send-plane-2-line"></i> Send a Message</a>
+                <a href="#" class="pill-btn pill-light flex-1 justify-center"><i class="ri-vidicon-line"></i> Book a Call</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Retainer card -->
+        <div class="glow-wrap w-full flex justify-center">
+        <div class="pricing-card p-4 md:p-7">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-4">
+              <p class="font-extrabold text-lg mb-1">KREE8 RETAINER</p>
+
+              <div class="row-box flex items-center gap-3">
+                <i class="ri-checkbox-circle-fill text-green-600"></i>
+                <span class="qty-pill">
+                  <button type="button" id="qty-minus"><i class="ri-subtract-line"></i></button>
+                  <span class="font-semibold text-sm w-4 text-center" id="qty-value">1</span>
+                  <button type="button" id="qty-plus"><i class="ri-add-line"></i></button>
+                </span>
+                <span class="text-[15px] font-medium text-[#304F67]">Active Task</span>
+              </div>
+
+              <ul class="flex flex-col gap-3">
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Desktop, Tablet, Mobile Responsive</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Figma File</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> No Limit to revisions</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Updates every 48 hours</li>
+                <li class="flex items-center gap-2 text-[15px] font-medium text-[#304F67]"><i class="ri-checkbox-circle-line text-gray-400"></i> Includes all the services</li>
+              </ul>
+
+              <div class="flex flex-wrap gap-2 text-xs text-gray-500 mt-1">
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Landing Page</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Logo</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Mobile Apps</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Web Apps</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Product Design</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Social Media Graphics</span>
+                <span class="bg-gray-100 rounded-full px-3 py-1.5">Animation Video 2D/3D</span>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <div class="price-card price-card-green h-[237px] p-5 flex flex-col justify-between" data-tilt>
+                <p class="font-extrabold text-xl text-white/50 relative z-10">KREE8</p>
+                <div class="relative z-10">
+                  <p class="text-xs tracking-widest text-[#0a3a1e]/70 font-semibold mb-1">KREE8 RETAINER SERVICE</p>
+                  <p class="price-font text-[30px] sm:text-[40px] leading-[40px]" style="color:#237F00;">$7,199</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <a href="https://t.me/jaydwivedidesign" class="pill-btn pill-dark flex-1 justify-center"><i class="ri-send-plane-2-line"></i> Send a Message</a>
+                <a href="#" class="pill-btn pill-light flex-1 justify-center"><i class="ri-vidicon-line"></i> Book a Call</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+        <p class="text-lg text-[var(--muted-2)] max-w-xl mt-14 leading-relaxed">
+          Just few clicks and decision today and tomorrow you'll find us in a Figma, working your project and see it finally starting to become real....
+        </p>
+      </section>
+    </div>
+
+    <!-- ================= PLAYGROUND VIEW ================= -->
+    <!-- Uses the same shared sidebar as every other page; only this view collapses it to
+         icon-only with a hover-to-expand animation and a transparent left-dense/right-light
+         gradient (via .pg-collapsed, toggled by the router). -->
+    <div class="w-full h-full" id="view-playground" style="display:none;">
+      <div id="pg-viewport" class="w-full h-full">
+        <div id="pg-canvas"></div>
+
+        <!-- Zoom control (top of board) -->
+        <div id="zoom-controls" class="absolute top-20 lg:top-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-0.5 bg-white/90 backdrop-blur rounded-full shadow-lg px-1.5 py-1.5 select-none">
+          <button id="zoom-out" class="zoom-btn" title="Zoom out"><i class="ri-subtract-line"></i></button>
+          <button id="zoom-reset" class="px-3 text-sm font-semibold tabular-nums min-w-[56px]" title="Reset to 100%">100%</button>
+          <button id="zoom-in" class="zoom-btn" title="Zoom in"><i class="ri-add-line"></i></button>
+          <div class="w-px h-4 bg-gray-200 mx-1"></div>
+          <button id="zoom-fit" class="zoom-btn" title="Show entire board"><i class="ri-focus-3-line"></i></button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ============================================================
+  // HOME VIEW behaviors (hero video, moodboard tiles, type picker,
+  // slideshow, pricing controls, team marquee, scroll reveals)
+  // ============================================================
+  (function(){
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(function(el){
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%' }
+      });
+    });
+
+    // --- FRAGMENTATION scattered tiles ---
+    (function(){
+      var word = 'FRAGMENTATION';
+      var wrap = document.querySelector('.frag-tiles');
+      if (!wrap) return;
+      word.split('').forEach(function(letter){
+        var tile = document.createElement('div');
+        tile.className = 'frag-tile';
+        var r = (Math.random() * 34 - 17).toFixed(2);
+        tile.style.setProperty('--r', r + 'deg');
+        var span = document.createElement('span');
+        span.className = 'font-bold text-[var(--ink)] text-lg md:text-xl';
+        span.textContent = letter;
+        tile.appendChild(span);
+        wrap.appendChild(tile);
+      });
+    })();
+
+    // --- Team marquee (duplicated for seamless loop) ---
+    (function(){
+      var team = [
+        { name: 'Ajibola', role: 'Motion Designer', img: 'ajibola' },
+        { name: 'Farhan', role: 'Product Designer', img: 'farhan' },
+        { name: 'Hossein Fathi', role: 'Web/Mobile App Designer', img: 'hossein' },
+        { name: 'Rehan Ahmed', role: 'Web/Mobile App Designer', img: 'rehman' },
+        { name: 'Ishan Zaad', role: 'Web Designer', img: 'ishan' }
+      ];
+      var track = document.querySelector('.team-track');
+      if (!track) return;
+      function renderSet(){
+        team.forEach(function(m){
+          var card = document.createElement('div');
+          card.className = 'w-[220px] md:w-[260px] shrink-0 rounded-[2rem] overflow-hidden relative shadow-[0_2.6px_6.5px_rgba(181,186,203,.31),0_20px_16px_rgba(181,186,203,.2)]';
+          card.innerHTML =
+            '<img src="https://www.kree8.studio/_next/image?url=%2Fassets%2Fteam%2F' + m.img + '.png&w=640&q=75" class="w-full aspect-[3/4] object-cover" />' +
+            '<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">' +
+              '<p class="text-white text-sm font-semibold">' + m.name + '</p>' +
+              '<p class="text-white/70 text-xs">' + m.role + '</p>' +
+            '</div>';
+          track.appendChild(card);
+        });
+      }
+      renderSet();
+      renderSet(); // duplicate for seamless -50% loop
+    })();
+
+    // --- Pricing: tabs, toggle, quantity stepper ---
+    (function(){
+      var tabs = document.querySelectorAll('#pricing-tabs .tab-btn');
+      tabs.forEach(function(tab){
+        tab.addEventListener('click', function(){
+          tabs.forEach(function(t){ t.classList.remove('active'); });
+          tab.classList.add('active');
+        });
+      });
+
+      var addDevToggle = document.getElementById('add-dev-toggle');
+      var addDevSwitch = document.getElementById('add-dev-switch');
+      if (addDevToggle){
+        addDevToggle.addEventListener('click', function(){
+          addDevSwitch.classList.toggle('on');
+        });
+      }
+
+      var qtyValue = document.getElementById('qty-value');
+      var qtyMinus = document.getElementById('qty-minus');
+      var qtyPlus = document.getElementById('qty-plus');
+      var qty = 1;
+      if (qtyPlus){
+        qtyPlus.addEventListener('click', function(){ qty = Math.min(qty + 1, 20); qtyValue.textContent = qty; });
+        qtyMinus.addEventListener('click', function(){ qty = Math.max(qty - 1, 1); qtyValue.textContent = qty; });
+      }
+    })();
+
+    // --- Project screenshot slideshow ---
+    (function(){
+      var wrap = document.getElementById('project-slider');
+      if (!wrap) return;
+      var slides = Array.from(wrap.querySelectorAll('.slide-img'));
+      var dotsWrap = document.getElementById('slider-dots');
+      var nextBtn = document.getElementById('slider-next');
+      var idx = 0;
+
+      slides.forEach(function(_, i){
+        var dot = document.createElement('span');
+        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function(){ goTo(i); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.from(dotsWrap.children);
+
+      function goTo(i){
+        slides[idx].style.opacity = '0';
+        dots[idx].classList.remove('active');
+        idx = (i + slides.length) % slides.length;
+        slides[idx].style.opacity = '1';
+        dots[idx].classList.add('active');
+      }
+
+      nextBtn.addEventListener('click', function(){ goTo(idx + 1); });
+
+      var autoplay = setInterval(function(){ goTo(idx + 1); }, 4000);
+      wrap.addEventListener('mouseenter', function(){ clearInterval(autoplay); });
+    })();
+
+    // --- Interactive type-scale picker (Inter Aa specimen) ---
+    (function(){
+      var sizes = [12,14,16,18,20,24,28,32,40,48];
+      var defaultSize = 24;
+      var picker = document.getElementById('size-picker');
+      var specimen = document.getElementById('type-specimen');
+      if (!picker || !specimen) return;
+      sizes.forEach(function(sz){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = sz + 'px';
+        btn.dataset.size = sz;
+        btn.className = 'size-btn text-sm px-2 py-1 rounded-md text-gray-400 hover:text-[var(--ink)] transition-colors' + (sz === defaultSize ? ' active' : '');
+        btn.addEventListener('click', function(){
+          specimen.style.fontSize = sz + 'px';
+          picker.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+        });
+        picker.appendChild(btn);
+      });
+      specimen.style.fontSize = defaultSize + 'px';
+    })();
+
+    // --- Hero video controls (play/pause, mute, fullscreen) ---
+    (function(){
+      var video = document.getElementById('hero-video');
+      var playBtn = document.getElementById('video-play-btn');
+      var playIcon = document.getElementById('video-play-icon');
+      var muteBtn = document.getElementById('video-mute-btn');
+      var muteIcon = document.getElementById('video-mute-icon');
+      var muteLabel = document.getElementById('video-mute-label');
+      var fsBtn = document.getElementById('video-fs-btn');
+      if (!video) return;
+
+      playBtn.addEventListener('click', function(){
+        if (video.paused){ video.play(); playIcon.className = 'ri-pause-fill text-lg'; }
+        else { video.pause(); playIcon.className = 'ri-play-fill text-lg'; }
+      });
+
+      muteBtn.addEventListener('click', function(){
+        video.muted = !video.muted;
+        if (video.muted){ muteIcon.className = 'ri-volume-mute-line'; muteLabel.textContent = 'Mute'; }
+        else { muteIcon.className = 'ri-volume-up-line'; muteLabel.textContent = 'Unmute'; }
+      });
+
+      fsBtn.addEventListener('click', function(){
+        if (video.requestFullscreen) video.requestFullscreen();
+        else if (video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+      });
+    })();
+
+    // --- Membership-card 3D tilt on hover ---
+    (function(){
+      document.querySelectorAll('[data-tilt]').forEach(function(card){
+        card.addEventListener('mousemove', function(e){
+          var rect = card.getBoundingClientRect();
+          var x = (e.clientX - rect.left) / rect.width - 0.5;
+          var y = (e.clientY - rect.top) / rect.height - 0.5;
+          card.style.transform = 'perspective(600px) rotateY(' + (x * 10) + 'deg) rotateX(' + (-y * 10) + 'deg) scale(1.02)';
+        });
+        card.addEventListener('mouseleave', function(){
+          card.style.transform = 'perspective(600px) rotateY(0deg) rotateX(0deg) scale(1)';
+        });
+      });
+    })();
+  })();
+
+  // ============================================================
+  // PROJECTS VIEW (Websites listing)
+  // ============================================================
+  (function(){
+    var projects = [
+      ['1','2360.avif',703], ['2','2324.avif',637], ['6','2360.avif',732], ['8','4096.avif',976],
+      ['9','1100.avif',583], ['10','1770.avif',897], ['12','2360.avif',897], ['13','2360.avif',887],
+      ['14','2360.avif',935], ['15','2360.avif',543], ['16','2360.avif',713], ['17','2360.avif',893],
+      ['18','2360.avif',743], ['19','2360.avif',645], ['20','2360.avif',854], ['21','2360.avif',929],
+      ['22','2360.avif',807], ['23','2360.avif',582], ['24','2360.avif',784], ['25','2360.avif',973],
+      ['26','2360.avif',703], ['27','2360.avif',780], ['28','2360.avif',694], ['29','2360.avif',688]
+    ];
+    var list = document.getElementById('project-list');
+    projects.forEach(function(p){
+      var num = p[0], file = p[1], h = p[2];
+      var card = document.createElement('div');
+      card.className = 'project-card';
+      card.innerHTML =
+        '<img src="https://www.kree8.studio/assets/work/websites/project' + num + '/' + file + '" ' +
+        'style="aspect-ratio:1100/' + h + ';" loading="lazy" alt="Kree8 website project ' + num + '" />';
+      list.appendChild(card);
+    });
+  })();
+
+  // ============================================================
+  // PLAYGROUND VIEW -- lazy-built on first visit (so its viewport
+  // measurements and card entrance animation are correct instead of
+  // running while the layout is still display:none)
+  // ============================================================
+  (function(){
+    // Real asset data captured from kree8.studio/playground: which unique screenshots belong to
+    // each of the 6 masonry columns (order preserved from the live site), each item's true aspect
+    // ratio (h/w) and its natural rotation, all measured from the actual page.
+    var columns = [
+      ['29','30','31','32','33'],
+      ['1','2','3','4','5'],
+      ['6','7','8','9','10','11'],
+      ['12','13','14','15','16','17'],
+      ['18','19','20','21','22','23'],
+      ['24','25','26','27','28']
+    ];
+    var aspect = {
+      '29':479/409,'30':348/412,'31':270/409,'32':461/408,'33':399/407,
+      '1':389/413,'2':455/408,'3':440/415,'4':440/415,'5':333/411,
+      '6':270/409,'7':425/415,'8':393/414,'9':386/407,'10':494/417,'11':275/409,
+      '12':288/410,'13':329/406,'14':336/411,'15':448/415,'16':460/416,'17':327/406,
+      '18':506/409,'19':425/415,'20':310/418,'21':324/406,'22':397/414,'23':512/409,
+      '24':467/416,'25':410/407,'26':360/412,'27':412/414,'28':379/407
+    };
+    var rot = {
+      '29':1,'30':-2,'31':2,'32':-1,'33':1,
+      '1':-2,'2':1,'3':-2,'4':2,'5':-2,
+      '6':2,'7':-2,'8':2,'9':1,'10':-2,'11':2,
+      '12':-2,'13':1,'14':-2,'15':2,'16':-2,'17':1,
+      '18':1,'19':-2,'20':-3.68,'21':1,'22':-2,'23':1,
+      '24':-2,'25':1,'26':-2,'27':2,'28':1
+    };
+
+    var CARD_W = 320;
+    var GAP = 26;
+    var colStagger = [0, 70, 24, 96, 10, 54];
+
+    var items = [];
+    var maxColBottom = 0;
+    columns.forEach(function(colIds, colIndex){
+      var x = colIndex * (CARD_W + GAP) + GAP;
+      var y = colStagger[colIndex];
+      colIds.forEach(function(id){
+        var h = Math.round(CARD_W * aspect[id]);
+        items.push([id, x, y, CARD_W, h, rot[id]]);
+        y += h + GAP;
+      });
+      if (y > maxColBottom) maxColBottom = y;
+    });
+
+    var CANVAS_W = columns.length * (CARD_W + GAP) + GAP;
+    var CANVAS_H = maxColBottom + GAP;
+    var BASE_SCALE = 1.7;
+    var pgZoom = { scale: BASE_SCALE };
+    var MIN_SCALE = 0.15, MAX_SCALE = 4.5;
+
+    var canvas = document.getElementById('pg-canvas');
+    var viewport = document.getElementById('pg-viewport');
+    var zoomLabel = document.getElementById('zoom-reset');
+    var tx = 0, ty = 0;
+    var isDown = false, startX = 0, startY = 0, startTx = 0, startTy = 0;
+    var built = false;
+
+    canvas.style.width = CANVAS_W + 'px';
+    canvas.style.height = CANVAS_H + 'px';
+
+    function apply(){
+      canvas.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + pgZoom.scale + ')';
+      zoomLabel.textContent = Math.round(pgZoom.scale / BASE_SCALE * 100) + '%';
+    }
+
+    function clamp(){
+      var scaledW = CANVAS_W * pgZoom.scale, scaledH = CANVAS_H * pgZoom.scale;
+      var minTx, maxTx, minTy, maxTy;
+      if (scaledW <= viewport.clientWidth){
+        minTx = maxTx = (viewport.clientWidth - scaledW) / 2;
+      } else {
+        minTx = viewport.clientWidth - scaledW - 300;
+        maxTx = 300;
+      }
+      if (scaledH <= viewport.clientHeight){
+        minTy = maxTy = (viewport.clientHeight - scaledH) / 2;
+      } else {
+        minTy = viewport.clientHeight - scaledH - 300;
+        maxTy = 300;
+      }
+      tx = Math.max(minTx, Math.min(maxTx, tx));
+      ty = Math.max(minTy, Math.min(maxTy, ty));
+    }
+
+    // Zoom while keeping a given viewport-space point (px, py) visually anchored in place
+    function zoomAt(px, py, newScale){
+      newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, newScale));
+      var canvasX = (px - tx) / pgZoom.scale;
+      var canvasY = (py - ty) / pgZoom.scale;
+      pgZoom.scale = newScale;
+      tx = px - canvasX * pgZoom.scale;
+      ty = py - canvasY * pgZoom.scale;
+      clamp();
+      apply();
+    }
+
+    // Re-center the board on its densest middle part at the default zoom. Called every time the
+    // Playground view is opened, since viewport size may have changed (or wasn't measurable yet
+    // the first time, while this layout was still display:none).
+    function recenter(){
+      pgZoom.scale = BASE_SCALE;
+      tx = (viewport.clientWidth - CANVAS_W * BASE_SCALE) / 2;
+      ty = (viewport.clientHeight - CANVAS_H * BASE_SCALE) / 2;
+      apply();
+    }
+
+    function buildCards(){
+      items.forEach(function(it){
+        var num = it[0], x = it[1], y = it[2], w = it[3], h = it[4], r = it[5];
+        var card = document.createElement('div');
+        card.className = 'pg-card';
+        card.style.left = x + 'px';
+        card.style.top = y + 'px';
+        card.style.width = w + 'px';
+        card.style.height = h + 'px';
+        card.style.setProperty('--r', r + 'deg');
+        var img = document.createElement('img');
+        img.src = 'https://www.kree8.studio/assets/playground/' + num + '.png';
+        img.loading = 'lazy';
+        card.appendChild(img);
+        canvas.appendChild(card);
+      });
+
+      // Soft staggered "fade + scale in" entrance for each card
+      var cards = Array.from(canvas.querySelectorAll('.pg-card'));
+      var order = cards.map(function(c, i){ return i; }).sort(function(){ return Math.random() - 0.5; });
+      order.forEach(function(cardIndex, seq){
+        var delay = 40 + seq * 28;
+        setTimeout(function(){
+          cards[cardIndex].classList.add('in');
+        }, delay);
+      });
+    }
+
+    // Grab-and-move works from anywhere on the board -- including directly on top of a
+    // screenshot card -- exactly like the real /playground (no per-card interactions to fight with).
+    viewport.addEventListener('mousedown', function(e){
+      if (e.target.closest('#zoom-controls')) return;
+      isDown = true;
+      startX = e.clientX; startY = e.clientY;
+      startTx = tx; startTy = ty;
+    });
+    window.addEventListener('mousemove', function(e){
+      if (!isDown) return;
+      tx = startTx + (e.clientX - startX);
+      ty = startTy + (e.clientY - startY);
+      clamp();
+      apply();
+    });
+    window.addEventListener('mouseup', function(){
+      isDown = false;
+    });
+
+    // Wheel: plain scroll pans the board; Ctrl/Cmd + wheel zooms in/out around the cursor
+    viewport.addEventListener('wheel', function(e){
+      e.preventDefault();
+      if (e.ctrlKey || e.metaKey){
+        var rect = viewport.getBoundingClientRect();
+        var factor = Math.exp(-e.deltaY * 0.0018);
+        zoomAt(e.clientX - rect.left, e.clientY - rect.top, pgZoom.scale * factor);
+      } else {
+        tx -= e.deltaX;
+        ty -= e.deltaY;
+        clamp();
+        apply();
+      }
+    }, { passive:false });
+
+    // touch support (single-finger pan)
+    var touchId = null;
+    viewport.addEventListener('touchstart', function(e){
+      var t = e.touches[0];
+      touchId = t.identifier;
+      startX = t.clientX; startY = t.clientY;
+      startTx = tx; startTy = ty;
+    }, { passive:true });
+    viewport.addEventListener('touchmove', function(e){
+      var t = e.touches[0];
+      if (t.identifier !== touchId) return;
+      tx = startTx + (t.clientX - startX);
+      ty = startTy + (t.clientY - startY);
+      clamp();
+      apply();
+    }, { passive:true });
+
+    // --- Top zoom control: -, %, +, and "fit whole board" ---
+    document.getElementById('zoom-in').addEventListener('click', function(){
+      zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, pgZoom.scale * 1.2);
+    });
+    document.getElementById('zoom-out').addEventListener('click', function(){
+      zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, pgZoom.scale / 1.2);
+    });
+    zoomLabel.addEventListener('click', function(){
+      zoomAt(viewport.clientWidth / 2, viewport.clientHeight / 2, BASE_SCALE);
+    });
+    document.getElementById('zoom-fit').addEventListener('click', function(){
+      var vw = viewport.clientWidth, vh = viewport.clientHeight;
+      var pad = 100;
+      var fitScale = Math.min((vw - pad) / CANVAS_W, (vh - pad) / CANVAS_H);
+      pgZoom.scale = Math.max(0.02, fitScale);
+      tx = Math.round((vw - CANVAS_W * pgZoom.scale) / 2);
+      ty = Math.round((vh - CANVAS_H * pgZoom.scale) / 2);
+      apply();
+    });
+
+    // Exposed for the router: build the board once on first visit, then simply recenter it
+    // (fresh, correctly-measured) every time the Playground view is opened.
+    window.__activatePlayground = function(){
+      if (!built){ buildCards(); built = true; }
+      recenter();
+    };
+  })();
+
+  // ============================================================
+  // ROUTER -- Home, Projects, Pricing and Playground are four
+  // independent views sharing one sidebar. Keeps the URL hash in
+  // sync so every view is directly linkable.
+  // ============================================================
+  (function(){
+    var views = ['home', 'projects', 'playground', 'pricing'];
+    var siteAside = document.getElementById('site-aside');
+    var siteMain = document.getElementById('site-main');
+    var viewHome = document.getElementById('view-home');
+    var viewProjects = document.getElementById('view-projects');
+    var viewPricing = document.getElementById('view-pricing');
+    var viewPlayground = document.getElementById('view-playground');
+    // #site-aside becomes position:fixed while collapsed for Playground, which pulls it out of
+    // #layout-standard's flex flow entirely -- it no longer contributes any height to that row.
+    // #site-main must therefore carry its own explicit height (not just rely on stretching to
+    // match the aside like the other views do), or view-playground's h-full canvas has nothing
+    // real to resolve against and collapses to zero height.
+    // pt-20 (mobile only) clears the fixed mobile top bar; lg:pt-6 restores the normal padding
+    // once the real sidebar (and no top bar) takes over.
+    var MAIN_CLASS_STANDARD = 'flex-1 flex justify-center pt-20 lg:pt-6 pb-6 px-6 md:px-10 min-h-screen min-w-0';
+    var MAIN_CLASS_PLAYGROUND = 'flex-1 flex h-dvh min-w-0';
+
+    function setActiveNav(view){
+      document.querySelectorAll('[data-view]').forEach(function(el){
+        var isActive = el.dataset.view === view;
+        el.classList.toggle('active', isActive);
+        if (el.dataset.iconLine){
+          var icon = el.querySelector('i');
+          if (icon) icon.className = isActive ? el.dataset.iconFill : el.dataset.iconLine;
+        }
+      });
+    }
+
+    function showView(view, opts){
+      opts = opts || {};
+      if (views.indexOf(view) === -1) view = 'home';
+      var isPlayground = view === 'playground';
+
+      document.documentElement.classList.toggle('pg-mode', isPlayground);
+      siteAside.classList.toggle('pg-collapsed', isPlayground);
+      siteMain.className = isPlayground ? MAIN_CLASS_PLAYGROUND : MAIN_CLASS_STANDARD;
+
+      viewHome.style.display = view === 'home' ? 'block' : 'none';
+      viewProjects.style.display = view === 'projects' ? 'block' : 'none';
+      viewPricing.style.display = view === 'pricing' ? 'block' : 'none';
+      viewPlayground.style.display = isPlayground ? 'block' : 'none';
+
+      setActiveNav(view);
+
+      if (!opts.silent && location.hash !== '#' + view){
+        history.replaceState(null, '', '#' + view);
+      }
+
+      if (isPlayground && window.__activatePlayground){
+        window.__activatePlayground();
+      } else if (!opts.silent) {
+        window.scrollTo(0, 0);
+      }
+
+      if (view === 'home' && window.ScrollTrigger){
+        ScrollTrigger.refresh();
+      }
+    }
+
+    document.addEventListener('click', function(e){
+      var el = e.target.closest('[data-view]');
+      if (!el) return;
+      e.preventDefault();
+      showView(el.dataset.view);
+    });
+
+    window.addEventListener('popstate', function(){
+      showView((location.hash || '#home').slice(1), { silent:true });
+    });
+
+    var initial = (location.hash || '#home').slice(1);
+    showView(initial, { silent:true, instant:true });
+  })();
+
+  // ============================================================
+  // MOBILE MENU -- open/close the slide-in panel; also closes itself
+  // whenever a [data-view] link is tapped (the router's own listener
+  // above already handles the actual navigation for that same click).
+  // ============================================================
+  (function(){
+    var menu = document.getElementById('mobile-menu');
+    var openBtn = document.getElementById('mobile-menu-btn');
+    var closeBtn = document.getElementById('mobile-menu-close');
+    var backdrop = document.getElementById('mobile-menu-backdrop');
+    if (!menu) return;
+
+    function open(){ menu.classList.add('open'); document.documentElement.classList.add('overflow-hidden'); }
+    function close(){ menu.classList.remove('open'); document.documentElement.classList.remove('overflow-hidden'); }
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+    menu.addEventListener('click', function(e){
+      if (e.target.closest('[data-view]')) close();
+    });
+  })();
+</script>
+</body>
+</html>
