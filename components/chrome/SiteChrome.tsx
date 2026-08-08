@@ -79,7 +79,7 @@ export function SiteChrome() {
             ))}
             <a href="#" className="nav-link">
               <i className="ri-briefcase-line"></i> <span>採用情報</span>{" "}
-              <span className="ml-auto text-[10px] bg-gray-200 rounded-full px-2 py-0.5 text-gray-500">Coming soon</span>
+              <span className="ml-auto text-[10px] bg-[var(--pink-tint)] rounded-full px-2 py-0.5 text-[var(--pilot-pink)]">Coming soon</span>
             </a>
           </nav>
           <div className="mt-auto flex flex-col gap-2">
@@ -128,7 +128,7 @@ export function SiteAside() {
         })}
         <a href="#" className="nav-link">
           <i className="ri-briefcase-line"></i> <span className="nav-label">採用情報</span>{" "}
-          <span className="ml-auto text-[10px] bg-gray-200 rounded-full px-2 py-0.5 text-gray-500 nav-badge">
+          <span className="ml-auto text-[10px] bg-[var(--pink-tint)] rounded-full px-2 py-0.5 text-[var(--pilot-pink)] nav-badge">
             Coming soon
           </span>
         </a>

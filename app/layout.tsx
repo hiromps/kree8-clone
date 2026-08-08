@@ -1,17 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_JP, Caveat, Phudu } from "next/font/google";
+import { Noto_Sans_JP, Caveat, Phudu } from "next/font/google";
 import "remixicon/fonts/remixicon.css";
 import "./globals.css";
 import { SiteChrome, SiteAside } from "@/components/chrome/SiteChrome";
 import MainShell from "@/components/chrome/MainShell";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-// Inter has no JP glyphs; Noto Sans JP is chained after it so Latin text keeps
-// Inter's metrics while Japanese falls back consistently across browsers.
+// Satoshi (Fontshare CDN, linked in <head> below) has no JP glyphs; Noto Sans JP
+// is chained after it so Latin text keeps Satoshi's metrics while Japanese falls
+// back consistently across browsers.
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
   variable: "--font-noto-jp",
@@ -40,8 +36,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ja"
-      className={`${inter.variable} ${notoSansJP.variable} ${caveat.variable} ${phudu.variable}`}
+      className={`${notoSansJP.variable} ${caveat.variable} ${phudu.variable}`}
     >
+      <head>
+        {/* Latin face: Satoshi via Fontshare (same pattern as GrowGram); JP is self-hosted via next/font above. */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" />
+      </head>
       <body className="min-h-screen">
         <SiteChrome />
         <div id="layout-standard" className="flex w-full">

@@ -70,7 +70,7 @@ export default function PricingView() {
                 onClick={() => setDevOn((on) => !on)}
               >
                 <span>
-                  <span className="flex items-center gap-2 text-[15px] font-medium text-[#304F67]">
+                  <span className="flex items-center gap-2 text-[15px] font-medium text-[var(--ink-2)]">
                     AIチャットボットを追加
                     <img src="/images/pricing/icons/nextjs.svg" alt="Next.js" className="h-4" />
                     <img src="/images/pricing/icons/vercel.svg" alt="Vercel" className="h-4" />
@@ -82,14 +82,14 @@ export default function PricingView() {
               </button>
 
               <div className="row-box flex items-center justify-between">
-                <span className="text-[15px] font-medium text-[#304F67]">追加ページ</span>
+                <span className="text-[15px] font-medium text-[var(--ink-2)]">追加ページ</span>
                 <span className="text-sm text-gray-400">
                   +¥20,000<span className="text-[var(--ink)] font-semibold">/ページ</span>
                 </span>
               </div>
 
               <div className="row-box flex items-center justify-between">
-                <span className="text-[15px] font-medium text-[#304F67]">アニメーション追加</span>
+                <span className="text-[15px] font-medium text-[var(--ink-2)]">アニメーション追加</span>
                 <span className="text-sm text-gray-400">
                   +¥15,000<span className="text-[var(--ink)] font-semibold">/箇所</span>
                 </span>
@@ -98,7 +98,7 @@ export default function PricingView() {
               <ul className="flex flex-col gap-3 mt-1">
                 {["オリジナルデザイン設計", "PC・タブレット・スマホ対応", "お問い合わせフォーム設置", "修正回数無制限", "48時間ごとに進捗共有"].map(
                   (item) => (
-                    <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[#304F67]">
+                    <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[var(--ink-2)]">
                       <i className="ri-checkbox-circle-line text-gray-400"></i> {item}
                     </li>
                   )
@@ -116,7 +116,7 @@ export default function PricingView() {
                 <p className="font-extrabold text-xl text-white/50 relative z-10">SOCIAL SMART</p>
                 <div className="relative z-10">
                   <p className="text-xs tracking-widest text-[#0a3a63]/70 font-semibold mb-1">WEBSITE PACKAGE</p>
-                  <p className="price-font text-[30px] sm:text-[40px] leading-[40px]" style={{ color: "#007BE5" }}>
+                  <p className="price-font text-[30px] sm:text-[40px] leading-[40px]" style={{ color: "#B366FF" }}>
                     ¥300,000
                   </p>
                 </div>
@@ -153,12 +153,12 @@ export default function PricingView() {
                       <i className="ri-add-line"></i>
                     </button>
                   </span>
-                  <span className="text-[15px] font-medium text-[#304F67]">進行中タスク</span>
+                  <span className="text-[15px] font-medium text-[var(--ink-2)]">進行中タスク</span>
                 </div>
 
                 <ul className="flex flex-col gap-3">
                   {["HP・LPの修正/更新対応", "AI自動化の保守・改善", "修正回数無制限", "月次レポート", "下記すべてのサービスに対応"].map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[#304F67]">
+                    <li key={item} className="flex items-center gap-2 text-[15px] font-medium text-[var(--ink-2)]">
                       <i className="ri-checkbox-circle-line text-gray-400"></i> {item}
                     </li>
                   ))}
@@ -184,7 +184,7 @@ export default function PricingView() {
                   <div className="relative z-10">
                     <p className="text-xs tracking-widest text-[#0a3a1e]/70 font-semibold mb-1">MONTHLY SUPPORT</p>
                     <p className="price-font text-[30px] sm:text-[40px] leading-[40px]" style={{ color: "#237F00" }}>
-                      ¥50,000<span className="text-base font-semibold" style={{ fontFamily: "var(--font-inter),var(--font-noto-jp),sans-serif" }}>/月</span>
+                      ¥50,000<span className="text-base font-semibold" style={{ fontFamily: '"Satoshi",var(--font-noto-jp),sans-serif' }}>/月</span>
                     </p>
                   </div>
                 </div>

@@ -41,19 +41,19 @@ function Hero() {
 
   return (
     <section id="home" className="pb-10">
-      <p className="text-[13px] tracking-wide text-gray-500 font-medium mb-4">
-        AI × 自動化で <span className="text-[var(--ink)] font-bold">5つのプロダクト</span> を開発・運営中
+      <p className="inline-block rounded-full border border-[var(--pink-border)] bg-[var(--pink-tint)] px-4 py-1.5 text-[13px] tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">
+        AI × 自動化で <span className="font-bold">5つのプロダクト</span> を開発・運営中
       </p>
       <h1 className="text-[28px] sm:text-[34px] md:text-[52px] leading-[1.15] font-bold max-w-3xl mb-8">
         <span className="text-[var(--ink)]">
-          AIで、社会を<i className="ri-shape-2-fill inline-block align-middle" style={{ color: "#3fbf3f", fontSize: "0.75em" }}></i>スマートに。
+          AIで、社会を<i className="ri-shape-2-fill inline-block align-middle" style={{ color: "#FF6B9D", fontSize: "0.75em" }}></i>スマートに。
         </span>
         <span className="text-[var(--muted)]"> 自動化で、</span>
         <span className="text-[var(--muted)]"> 人とサービスを </span>
-        <span className="text-[var(--ink)]">つなぐ。</span>
+        <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">つなぐ。</span>
       </h1>
       <div className="flex flex-wrap gap-3 mb-10">
-        <a href={CONTACT_MAILTO} className="pill-btn pill-light">
+        <a href={CONTACT_MAILTO} className="pill-btn pill-dark">
           <i className="ri-mail-line"></i> お問い合わせ
         </a>
         <Link href="/products" className="pill-btn pill-light">
@@ -61,7 +61,7 @@ function Hero() {
         </Link>
       </div>
 
-      <div className="rounded-[28px] bg-[#f5f6f8] p-2 max-w-4xl shadow-lg reveal" id="hero-video-wrap">
+      <div className="rounded-[28px] bg-[#F5F5F5] border border-[#E5E7EB] p-2 max-w-4xl shadow-[0_18px_50px_rgba(40,40,60,0.08)] reveal" id="hero-video-wrap">
         <div className="relative rounded-[22px] overflow-hidden aspect-video">
           <video
             id="hero-video"
@@ -71,7 +71,7 @@ function Hero() {
             muted
             loop
             playsInline
-            poster="/images/home/hero-poster.jpg"
+            poster="/images/home/hero-poster.svg"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
           >
@@ -144,7 +144,7 @@ function Mission() {
         気づけば、本当にやりたかったことに使う時間が残っていない。でもそれは、あなたのせいでも、ツールのせいでもありません。
       </p>
 
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mt-14 mb-4">本当の課題は、何か?</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mt-14 mb-4">本当の課題は、何か?</p>
       <div className="flex items-center gap-1 md:gap-1.5 flex-wrap mb-8">
         <span className="text-lg font-semibold text-[var(--ink)] mr-2">それは──</span>
         <div className="frag-tiles flex gap-1 md:gap-1.5 flex-wrap">
@@ -171,7 +171,7 @@ function Mission() {
 function Services() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mb-4">私たちの答え</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">私たちの答え</p>
       <h2 className="text-2xl md:text-3xl font-bold mb-12 flex items-center flex-wrap gap-2">
         だから、<img src="/images/logo-mark.svg" alt="" className="h-6 inline" /> <span>Social Smart</span> をつくりました
       </h2>
@@ -233,7 +233,7 @@ function WhySocialSmart() {
 
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mb-4">ABOUT SOCIAL SMART</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">ABOUT SOCIAL SMART</p>
       <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-10">
         私たちのロゴが <img src="/images/logo-mark.svg" alt="" className="h-6 inline mx-1" /> シンプルな結び目なのには、理由があります。象徴しているのは、ただひとつ:
       </p>
@@ -244,7 +244,7 @@ function WhySocialSmart() {
             Aa
           </span>
           <div>
-            <p className="font-semibold">Inter</p>
+            <p className="font-semibold">Satoshi</p>
             <p className="text-gray-400 text-sm">Regular</p>
           </div>
         </div>
@@ -338,15 +338,15 @@ function ServiceAreas() {
               alt=""
               className="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110"
             />
-            <span className="text-[#304F67] text-base font-normal">{area.label}</span>
+            <span className="text-[var(--muted-2)] text-base font-normal">{area.label}</span>
           </div>
         ))}
         <Link
           href="/products"
-          className="flex flex-col items-center h-[118px] justify-center hover:bg-[#e8e8e8] transition-colors duration-150 rounded-3xl"
+          className="flex flex-col items-center h-[118px] justify-center hover:bg-[var(--pink-tint)] transition-colors duration-150 rounded-3xl"
         >
-          <i className="ri-folder-open-fill text-[#3b82f6] mb-1" style={{ fontSize: "44px" }}></i>
-          <span className="text-[#304F67] text-base font-normal">すべてのプロダクト</span>
+          <i className="ri-folder-open-fill text-[var(--pilot-pink)] mb-1" style={{ fontSize: "44px" }}></i>
+          <span className="text-[var(--muted-2)] text-base font-normal">すべてのプロダクト</span>
         </Link>
       </div>
 
@@ -360,7 +360,7 @@ function ServiceAreas() {
 function Flow() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mb-2">進め方は?</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">進め方は?</p>
       <h2 className="text-2xl md:text-3xl font-bold mb-10">ご依頼の流れ</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FLOW_STEPS.map((step) => (
@@ -383,11 +383,11 @@ function Flow() {
 function Vision() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mb-2">VISION</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">VISION</p>
       <p className="text-2xl md:text-3xl font-semibold mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ。</p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-14">
-        <div className="bg-white rounded-2xl p-6">
+        <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
           <div className="flex items-center gap-3 mb-2">
             <img src="/images/avatars/hiromps.png" alt="hiromps" className="w-10 h-10 rounded-full" />
             <div>
@@ -398,7 +398,7 @@ function Vision() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl p-6">
+        <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
           <div className="flex items-center gap-3 mb-2">
             <img src="/images/logo-mark.svg" alt="Social Smart" className="w-10 h-10 rounded-full" />
             <div>
@@ -422,7 +422,7 @@ function Vision() {
           {[...PRODUCTS, ...PRODUCTS].map((p, i) => (
             <div
               key={`${p.key}-${i}`}
-              className="w-[220px] md:w-[260px] shrink-0 rounded-[2rem] overflow-hidden relative shadow-[0_2.6px_6.5px_rgba(181,186,203,.31),0_20px_16px_rgba(181,186,203,.2)]"
+              className="w-[220px] md:w-[260px] shrink-0 rounded-[2rem] overflow-hidden relative shadow-[0_2.6px_6.5px_rgba(40,40,60,.10),0_20px_16px_rgba(40,40,60,.07)]"
             >
               <img src={`/images/team/${p.key}.png`} alt={p.name} className="w-full aspect-[3/4] object-cover" />
               <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
@@ -440,7 +440,7 @@ function Vision() {
 function FinalNote() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-gray-400 font-semibold mb-6">最後に</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-6">最後に</p>
       <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-6">
         Social Smart は、&quot;AIを使うこと&quot;そのものが目的ではありません。人がより価値あることに集中できる<span className="highlight">時間をつくる</span>ためのプロジェクトです。
       </p>
@@ -463,10 +463,10 @@ function FinalNote() {
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <a href={CONTACT_MAILTO} className="pill-btn pill-light">
+        <a href={CONTACT_MAILTO} className="pill-btn pill-dark">
           <i className="ri-mail-line"></i> お問い合わせ
         </a>
-        <Link href="/products" className="pill-btn pill-dark">
+        <Link href="/products" className="pill-btn pill-light">
           <i className="ri-folder-open-line"></i> プロダクトを見る
         </Link>
       </div>
