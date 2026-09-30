@@ -41,16 +41,16 @@ function Hero() {
 
   return (
     <section id="home" className="pb-10">
-      <p className="inline-block rounded-full border border-[var(--pink-border)] bg-[var(--pink-tint)] px-4 py-1.5 text-[13px] tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">
-        AI × 自動化で <span className="font-bold">5つのプロダクト</span> を開発・運営中
+      <p className="inline-flex max-w-full items-center whitespace-nowrap max-[359px]:whitespace-normal rounded-full border border-[var(--pink-border)] bg-[var(--pink-tint)] px-3.5 py-1.5 text-[11px] min-[375px]:text-[12px] sm:px-4 sm:text-[13px] tracking-normal sm:tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">
+        AI×自動化で<span className="font-bold">5つのプロダクト</span>を開発・運営中
       </p>
       <h1 className="text-[28px] sm:text-[34px] md:text-[52px] leading-[1.15] font-bold max-w-3xl mb-8">
         <span className="text-[var(--ink)]">
-          AIで、社会を<i className="ri-shape-2-fill inline-block align-middle" style={{ color: "#FF6B9D", fontSize: "0.75em" }}></i>スマートに。
+          AIで、社会をスマートに
         </span>
         <span className="text-[var(--muted)]"> 自動化で、</span>
         <span className="text-[var(--muted)]"> 人とサービスを </span>
-        <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">つなぐ。</span>
+        <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">つなぐ</span>
       </h1>
       <div className="flex flex-wrap gap-3 mb-10">
         <a href={CONTACT_MAILTO} className="pill-btn pill-dark">
@@ -141,7 +141,7 @@ function Mission() {
         確認して、待って、また確認して……
       </p>
       <p className="text-lg md:text-xl leading-relaxed text-[var(--muted-2)] mt-6">
-        気づけば、本当にやりたかったことに使う時間が残っていない。でもそれは、あなたのせいでも、ツールのせいでもありません。
+        気づけば、本当にやりたかったことに使う時間が残っていない。でもそれは、あなたのせいでも、ツールのせいでもありません
       </p>
 
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mt-14 mb-4">本当の課題は、何か?</p>
@@ -162,7 +162,7 @@ function Mission() {
       </ul>
 
       <p className="text-2xl md:text-3xl font-semibold mt-14 leading-snug">
-        仕事は、つぎはぎするものじゃない。<span className="highlight">ひとつの流れ</span>として動くべきだ。
+        仕事は、つぎはぎするものじゃない。<span className="highlight">ひとつの流れ</span>として動くべきだ
       </p>
     </section>
   );
@@ -222,7 +222,7 @@ function Services() {
       </div>
 
       <p className="text-2xl md:text-3xl font-semibold mt-16 max-w-2xl leading-snug">
-        単発のツールの寄せ集めとしてではなく。人の仕事を置き換えるためでもなく……<span className="highlight">全体をひとつの流れ</span>として設計する、プロダクト群として。
+        単発のツールの寄せ集めとしてではなく。人の仕事を置き換えるためでもなく……<span className="highlight">全体をひとつの流れ</span>として設計する、プロダクト群として
       </p>
     </section>
   );
@@ -266,7 +266,7 @@ function WhySocialSmart() {
       <p className="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">
         それが、私たちのものづくりの姿勢です。ひとつの「正解の型」にすべてを押し込むことはしません……
       </p>
-      <p className="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">異なる課題。異なるユーザー。異なる最適解。</p>
+      <p className="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">異なる課題。異なるユーザー。異なる最適解</p>
       <p className="text-lg text-[var(--ink-2)] font-medium max-w-2xl leading-relaxed">それでも、細部へのこだわりは同じ。実際に見てみてください :)</p>
     </section>
   );
@@ -351,7 +351,7 @@ function ServiceAreas() {
       </div>
 
       <p className="text-2xl md:text-3xl font-semibold mt-16 max-w-xl leading-snug">
-        ここまで見ていただければ、きっと伝わったはずです。プロダクトには一貫した思想があり、体験はシンプルで、導入に大げさな準備はいりません。
+        ここまで見ていただければ、きっと伝わったはずです。プロダクトには一貫した思想があり、体験はシンプルで、導入に大げさな準備はいりません
       </p>
     </section>
   );
@@ -384,7 +384,7 @@ function Vision() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">VISION</p>
-      <p className="text-2xl md:text-3xl font-semibold mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ。</p>
+      <p className="text-2xl md:text-3xl font-semibold mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ</p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-14">
         <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
@@ -411,9 +411,9 @@ function Vision() {
         </div>
       </div>
 
-      <p className="text-lg text-[var(--ink-2)] font-medium mb-2">開発者ファースト。でも、届けたいのは&quot;人の時間&quot;。</p>
+      <p className="text-lg text-[var(--ink-2)] font-medium mb-2">開発者ファースト。でも、届けたいのは&quot;人の時間&quot;</p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-14 leading-relaxed">
-        Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。小さいからこそ判断は速く、思想は一貫しています。AIは目的ではなく、人がより価値あることに集中するための手段──その信念で、すべてのプロダクトをつくっています。
+        Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。小さいからこそ判断は速く、思想は一貫しています。AIは目的ではなく、人がより価値あることに集中するための手段──その信念で、すべてのプロダクトをつくっています
       </p>
 
       <div className="marquee-mask overflow-hidden w-full">
@@ -442,13 +442,13 @@ function FinalNote() {
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-6">最後に</p>
       <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-6">
-        Social Smart は、&quot;AIを使うこと&quot;そのものが目的ではありません。人がより価値あることに集中できる<span className="highlight">時間をつくる</span>ためのプロジェクトです。
+        Social Smart は、&quot;AIを使うこと&quot;そのものが目的ではありません。人がより価値あることに集中できる<span className="highlight">時間をつくる</span>ためのプロジェクトです
       </p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
-        無駄な作業を減らしたい。人と企業とサービスを、もっと自然につなぎたい。そう感じたら、いつでも気軽にご連絡ください。
+        無駄な作業を減らしたい。人と企業とサービスを、もっと自然につなぎたい。そう感じたら、いつでも気軽にご連絡ください
       </p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
-        たくさんのツールはいりません。難しく考える必要もありません。必要なのは <span className="highlight">Social Smart</span> だけ。
+        たくさんのツールはいりません。難しく考える必要もありません。必要なのは <span className="highlight">Social Smart</span> だけ
       </p>
 
       <div className="flex flex-wrap gap-6 sm:gap-10 mb-12">
