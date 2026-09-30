@@ -124,14 +124,14 @@ function Hero() {
 function Mission() {
   return (
     <section className="py-10 sm:py-16 max-w-3xl reveal">
-      <p className="text-lg md:text-xl leading-relaxed text-[var(--ink-2)]">
+      <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)]">
         私たちも、プロダクトをつくる過程が大好きです……ひとつのアイデア、ラフなスケッチ、「これは形になるかもしれない」という予感{" "}
         <i className="ri-smartphone-line"></i>
       </p>
-      <p className="text-lg md:text-xl leading-relaxed text-[var(--ink-2)] mt-6">
+      <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)] mt-6">
         でもその先に、いつも同じ壁がありました…… <span className="highlight font-semibold">「終わらない手作業」</span>
       </p>
-      <p className="text-lg md:text-xl leading-relaxed text-[var(--muted-2)] mt-6">
+      <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--muted-2)] mt-6">
         毎日、同じ入力を何度も何度も繰り返す……
         <br />
         ツールAからツールBへコピー&ペースト、
@@ -140,13 +140,13 @@ function Mission() {
         <br />
         確認して、待って、また確認して……
       </p>
-      <p className="text-lg md:text-xl leading-relaxed text-[var(--muted-2)] mt-6">
+      <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--muted-2)] mt-6">
         気づけば、本当にやりたかったことに使う時間が残っていない。でもそれは、あなたのせいでも、ツールのせいでもありません
       </p>
 
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mt-14 mb-4">本当の課題は、何か?</p>
       <div className="flex items-center gap-1 md:gap-1.5 flex-wrap mb-8">
-        <span className="text-lg font-semibold text-[var(--ink)] mr-2">それは──</span>
+        <span className="hand text-xl text-[var(--ink)] mr-2">それは──</span>
         <div className="frag-tiles flex gap-1 md:gap-1.5 flex-wrap">
           {FRAG_WORD.split("").map((letter, i) => (
             <div key={i} className="frag-tile" style={{ "--r": `${FRAG_ROTATIONS[i]}deg` } as React.CSSProperties}>
@@ -155,13 +155,13 @@ function Mission() {
           ))}
         </div>
       </div>
-      <ul className="text-lg text-[var(--muted-2)] space-y-2">
+      <ul className="hand text-xl text-[var(--muted-2)] space-y-2">
         <li>— 手作業が多すぎる</li>
         <li>— ツールが多すぎる</li>
         <li>— 分断が多すぎる</li>
       </ul>
 
-      <p className="text-2xl md:text-3xl font-semibold mt-14 leading-snug">
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mt-14 leading-snug">
         仕事は、つぎはぎするものじゃない。<span className="highlight">ひとつの流れ</span>として動くべきだ
       </p>
     </section>
@@ -221,7 +221,7 @@ function Services() {
         </div>
       </div>
 
-      <p className="text-2xl md:text-3xl font-semibold mt-16 max-w-2xl leading-snug">
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mt-16 max-w-2xl leading-snug">
         単発のツールの寄せ集めとしてではなく。人の仕事を置き換えるためでもなく……<span className="highlight">全体をひとつの流れ</span>として設計する、プロダクト群として
       </p>
     </section>
@@ -234,7 +234,7 @@ function WhySocialSmart() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">ABOUT SOCIAL SMART</p>
-      <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-10">
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] max-w-2xl leading-snug mb-10">
         私たちのロゴが <img src="/images/logo-mark.svg" alt="" className="h-6 inline mx-1" /> シンプルな結び目なのには、理由があります。象徴しているのは、ただひとつ:
       </p>
 
@@ -263,11 +263,11 @@ function WhySocialSmart() {
       </div>
 
       <h3 className="text-3xl md:text-4xl font-bold mb-6">つながり</h3>
-      <p className="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">
+      <p className="hand text-xl text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">
         それが、私たちのものづくりの姿勢です。ひとつの「正解の型」にすべてを押し込むことはしません……
       </p>
-      <p className="text-lg text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">異なる課題。異なるユーザー。異なる最適解</p>
-      <p className="text-lg text-[var(--ink-2)] font-medium max-w-2xl leading-relaxed">それでも、細部へのこだわりは同じ。実際に見てみてください :)</p>
+      <p className="hand text-xl text-[var(--muted-2)] max-w-2xl leading-relaxed mb-2">異なる課題。異なるユーザー。異なる最適解</p>
+      <p className="hand text-xl text-[var(--ink-2)] max-w-2xl leading-relaxed">それでも、細部へのこだわりは同じ。実際に見てみてください :)</p>
     </section>
   );
 }
@@ -350,7 +350,7 @@ function ServiceAreas() {
         </Link>
       </div>
 
-      <p className="text-2xl md:text-3xl font-semibold mt-16 max-w-xl leading-snug">
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mt-16 max-w-xl leading-snug">
         ここまで見ていただければ、きっと伝わったはずです。プロダクトには一貫した思想があり、体験はシンプルで、導入に大げさな準備はいりません
       </p>
     </section>
@@ -384,7 +384,7 @@ function Vision() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">VISION</p>
-      <p className="text-2xl md:text-3xl font-semibold mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ</p>
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ</p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-14">
         <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
@@ -411,7 +411,7 @@ function Vision() {
         </div>
       </div>
 
-      <p className="text-lg text-[var(--ink-2)] font-medium mb-2">開発者ファースト。でも、届けたいのは&quot;人の時間&quot;</p>
+      <p className="hand text-xl text-[var(--ink-2)] mb-2">開発者ファースト。でも、届けたいのは&quot;人の時間&quot;</p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-14 leading-relaxed">
         Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。小さいからこそ判断は速く、思想は一貫しています。AIは目的ではなく、人がより価値あることに集中するための手段──その信念で、すべてのプロダクトをつくっています
       </p>
@@ -441,13 +441,13 @@ function FinalNote() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-6">最後に</p>
-      <p className="text-2xl md:text-3xl font-semibold max-w-2xl leading-snug mb-6">
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] max-w-2xl leading-snug mb-6">
         Social Smart は、&quot;AIを使うこと&quot;そのものが目的ではありません。人がより価値あることに集中できる<span className="highlight">時間をつくる</span>ためのプロジェクトです
       </p>
-      <p className="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
+      <p className="hand text-xl text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
         無駄な作業を減らしたい。人と企業とサービスを、もっと自然につなぎたい。そう感じたら、いつでも気軽にご連絡ください
       </p>
-      <p className="text-lg text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
+      <p className="hand text-xl text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
         たくさんのツールはいりません。難しく考える必要もありません。必要なのは <span className="highlight">Social Smart</span> だけ
       </p>
 
