@@ -235,7 +235,7 @@ function WhySocialSmart() {
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">ABOUT SOCIAL SMART</p>
       <p className="hand text-3xl md:text-4xl text-[var(--ink)] max-w-2xl leading-snug mb-10">
-        私たちのロゴが <img src="/images/logo-mark.svg" alt="" className="h-6 inline mx-1" /> シンプルな結び目なのには、理由があります。象徴しているのは、ただひとつ:
+        私たちのロゴが <img src="/images/logo-mark.svg" alt="" className="h-7 md:h-8 inline mx-1 align-[-0.15em]" /> シンプルな結び目なのには、理由があります。象徴しているのは、ただひとつ:
       </p>
 
       <div className="type-specimen-card border border-dashed border-gray-300 rounded-2xl p-6 md:p-8 mb-10">
