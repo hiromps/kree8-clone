@@ -236,6 +236,10 @@ body{background:var(--page-bg); color:var(--ink);}
              0px 17.57px 10.88px rgba(40,40,60,.06),
              0px 31.8px 12.55px rgba(40,40,60,.02);
 }
+/* Six tabs at phone width: tighter pills so the row takes 2 lines instead of 4 */
+@media (max-width:639px){
+  .cat-tab{ padding:10px 16px; font-size:14px; }
+}
 
 /* --- Project showcase card (Projects/Websites listing) --- */
 .project-card{
