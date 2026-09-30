@@ -238,15 +238,18 @@ function WhySocialSmart() {
       </p>
 
       <div className="type-specimen-card border border-dashed border-gray-300 rounded-2xl p-6 md:p-8 mb-10">
-        <div className="flex items-center gap-6 flex-wrap mb-6">
-          <span id="type-specimen" className="font-extrabold leading-none transition-all duration-300" style={{ fontSize: `${size}px` }}>
-            Aa
+        <div className="flex items-center gap-6 flex-wrap mb-4">
+          <span id="type-specimen" className="hand leading-none transition-all duration-300" style={{ fontSize: `${size}px` }}>
+            あア花
           </span>
           <div>
-            <p className="font-semibold">Satoshi</p>
-            <p className="text-gray-400 text-sm">Regular</p>
+            <p className="font-semibold">花とちょうちょ</p>
+            <p className="text-gray-400 text-sm">手書きフォント · suzukimemo</p>
           </div>
         </div>
+        <p className="text-sm leading-relaxed text-[var(--muted-2)] max-w-xl mb-6">
+          このサイトの語りかける文章には、手書きフォント「花とちょうちょ」を使っています。整った書体ではなく、人の手の温度が伝わる文字で
+        </p>
         <div id="size-picker" className="flex items-end gap-1.5 flex-wrap">
           {TYPE_SIZES.map((sz) => (
             <button
