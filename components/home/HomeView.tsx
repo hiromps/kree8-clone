@@ -340,7 +340,7 @@ function ServiceAreas() {
               alt=""
               className="w-[56px] h-[56px] sm:w-[76px] sm:h-[76px] transition-transform duration-300 ease-out group-hover:scale-110"
             />
-            <span className="text-[var(--muted-2)] text-base font-normal">{area.label}</span>
+            <span className="text-[var(--muted-2)] whitespace-nowrap text-[clamp(11px,3.4vw,16px)] sm:text-base font-normal">{area.label}</span>
           </div>
         ))}
         <Link
@@ -348,7 +348,7 @@ function ServiceAreas() {
           className="flex flex-col items-center h-[118px] justify-center hover:bg-[var(--pink-tint)] transition-colors duration-150 rounded-3xl"
         >
           <i className="ri-folder-open-fill text-[var(--pilot-pink)] mb-1" style={{ fontSize: "44px" }}></i>
-          <span className="text-[var(--muted-2)] text-base font-normal">すべてのプロダクト</span>
+          <span className="text-[var(--muted-2)] whitespace-nowrap text-[clamp(11px,3.4vw,16px)] sm:text-base font-normal">すべて見る</span>
         </Link>
       </div>
 
