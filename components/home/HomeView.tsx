@@ -125,8 +125,7 @@ function Mission() {
   return (
     <section className="py-10 sm:py-16 max-w-3xl reveal">
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)]">
-        私たちも、プロダクトをつくる過程が大好きです……ひとつのアイデア、ラフなスケッチ、「これは形になるかもしれない」という予感{" "}
-        <i className="ri-smartphone-line"></i>
+        私たちも、プロダクトをつくる過程が大好きです……ひとつのアイデア、ラフなスケッチ、「これは形になるかもしれない」という予感
       </p>
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)] mt-6">
         でもその先に、いつも同じ壁がありました…… <span className="highlight font-semibold">「終わらない手作業」</span>
