@@ -54,7 +54,7 @@ const CATALOG_SEED: CatalogSeed[] = [
   },
   {
     key: "minoru-ai",
-    description: "テキストのアイデアから動画を生成するAIアシスタント。台本づくりから書き出しまでを一気通貫で",
+    description: "アイデアを入力するだけで、AIが動画に仕上げるアシスタント",
     categories: ["ai"],
   },
   {

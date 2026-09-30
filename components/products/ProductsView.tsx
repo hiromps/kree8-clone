@@ -16,13 +16,12 @@ export default function ProductsView() {
   return (
     <MotionConfig reducedMotion="user">
       {/* CATEGORY TABS: tool-type filter, "すべて" first like a chip row */}
-      <div className="flex items-center justify-center flex-wrap gap-1 mb-8" role="tablist" aria-label="ツール別に絞り込み">
+      <div className="flex items-center justify-center flex-wrap gap-1 mb-8" aria-label="ツール別に絞り込み">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
-            role="tab"
-            aria-selected={filter === tab.key}
+            aria-pressed={filter === tab.key}
             className={`cat-tab${filter === tab.key ? " active" : ""}`}
             onClick={() => setFilter(tab.key)}
           >
