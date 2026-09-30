@@ -1,0 +1,266 @@
+/* ==========================================================================
+   Floating glass bottom tab bar (below the lg breakpoint only)
+
+   Glassmorphism tuned for this site's light page background (#F5F5F5): white
+   frosted glass with a soft pink → lavender glow behind it (the same pastel pair
+   as --paper-gradient). Depth comes from light and layers
+   (glow → glass → lens → icon), never from hard 1px dark borders or heavy drop
+   shadows. Content scrolling underneath blurs through the bar.
+   ========================================================================== */
+
+.root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform 0.4s var(--ease-out),
+    opacity 0.4s var(--ease-out);
+}
+
+/* Layer 0: pastel light behind the bar. Two blurred, offset ellipses tint the glass */
+.root::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -18px -10px -26px;
+  border-radius: 9999px;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 80% at 22% 70%, rgba(255, 107, 157, 0.38), transparent 70%),
+    radial-gradient(50% 80% at 78% 30%, rgba(179, 102, 255, 0.32), transparent 70%),
+    radial-gradient(70% 60% at 50% 100%, rgba(255, 138, 101, 0.2), transparent 70%);
+  filter: blur(22px);
+}
+
+/* Hidden once the desktop sidebar takes over (same lg breakpoint as SiteChrome) */
+@media (min-width: 1024px) {
+  .root {
+    display: none;
+  }
+}
+
+/* While the slide-in mobile menu is open (SiteChrome toggles #mobile-menu.open),
+   the bar retreats below the viewport instead of sitting under the backdrop */
+body:has(:global(#mobile-menu.open)) .root {
+  transform: translateY(calc(100% + 24px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* --- Layer 1: the bar itself (white frosted glass) ---
+   The rim is drawn with inset box-shadows rather than a border so the 1px never
+   aliases along the pill radius. Shadows stay large and soft; no dark outline. */
+.bar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(var(--tab-count, 4), 1fr);
+  height: 62px;
+  padding: 5px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.64) 0%, rgba(255, 255, 255, 0.44) 100%);
+  /* Unprefixed only: autoprefixer adds -webkit-backdrop-filter at build time */
+  backdrop-filter: blur(30px) saturate(170%);
+  /* top edge highlight / inner rim / soft pink outer light / floating shadow (large, faint) */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 8px 32px rgba(255, 107, 157, 0.14),
+    0 18px 48px rgba(40, 40, 60, 0.14);
+}
+
+/* Reflection across the upper half */
+.bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 58%
+  );
+}
+
+/* A hint of pink pooling along the bottom edge (depth via colour, not darkness) */
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 107, 157, 0) 50%, rgba(255, 107, 157, 0.08) 100%);
+}
+
+/* Without backdrop-filter the glass goes nearly opaque so labels stay readable */
+@supports not (backdrop-filter: blur(1px)) {
+  .bar {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.92) 100%);
+  }
+}
+
+/* --- Each tab --- */
+.tab {
+  position: relative;
+  z-index: 1; /* above the bar's ::before / ::after overlays */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 9999px;
+  color: rgba(63, 63, 80, 0.62);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+  transition:
+    color 0.2s ease,
+    transform 0.12s ease;
+}
+
+/* Active: brand pink for the icon; the label switches to ink for contrast at 11px */
+.tab[data-active] {
+  color: var(--pilot-pink, #ff6b9d);
+}
+
+.tab:active {
+  transform: scale(0.94);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--pilot-pink, #ff6b9d);
+  outline-offset: -2px;
+}
+
+/* --- Layer 2: active pill = an inner lens that springs between tabs ---
+   Not painted solid: a white rim plus a faint glass face, with a whisper of the
+   site's pink tint, so the glow behind the bar still shows through it. */
+.pill {
+  position: absolute;
+  inset: 0; /* fills the 52px cell */
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 240, 246, 0.45) 100%);
+  /* Weaker blur than the bar: "slightly sharper through the lens" */
+  backdrop-filter: blur(8px) saturate(160%) brightness(1.04);
+  /* top reflection / white rim / faint pink outer light */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.85),
+    0 4px 16px rgba(255, 107, 157, 0.16);
+  pointer-events: none;
+  /* framer-motion animates transform; pre-promote to its own layer so Safari keeps
+     compositing stable inside an overflow:hidden + backdrop-filter parent */
+  will-change: transform;
+}
+
+/* Thin reflection along the top edge only */
+.pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(60% 40% at 50% 0%, rgba(255, 255, 255, 0.5), transparent 70%);
+}
+
+/* --- Layer 3: icon (two stacked layers) ---
+   iconLine: the regular line icon, shown when inactive.
+   iconFill: a silhouette with the detail strokes cut out via SVG mask, shown when active.
+             The bar's glass shows through the cut-outs, so no second colour is needed.
+   The mask's detail layer strokes everything black (= hide) except the outline element,
+   which stays white so the outline never gets a groove. Which child is the outline is
+   declared per tab (data-outline="first" | "last") because lucide is not consistent. */
+.iconStack {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  transition: filter 0.2s ease;
+}
+
+/* Active: a soft pink bloom */
+.tab[data-active] .iconStack {
+  filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.38));
+}
+
+.iconFill,
+.iconLine {
+  position: absolute;
+  inset: 0;
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.2s ease;
+}
+
+.iconLine {
+  fill: none;
+  stroke: currentColor;
+}
+
+.iconFill {
+  opacity: 0;
+}
+
+/* Mask detail layer: black = cut out. Only the outline element stays white (= keep) */
+.maskDetail {
+  stroke: #000;
+}
+
+.maskDetail[data-outline="last"] > :last-child,
+.maskDetail[data-outline="first"] > :first-child {
+  stroke: #fff;
+}
+
+.tab[data-active] .iconLine {
+  opacity: 0;
+}
+
+.tab[data-active] .iconFill {
+  opacity: 1;
+}
+
+/* Font family is inherited from globals (Satoshi → Noto Sans JP) */
+.label {
+  position: relative;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  transition:
+    color 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.tab[data-active] .label {
+  color: var(--ink, #242433);
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+/* --- Contextual CTA band (under the bar, slides from 0 → 44px) --- */
+.ctaSlot {
+  overflow: hidden;
+  margin-top: 8px;
+  border-radius: 9999px;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  background: var(--paper-gradient, linear-gradient(135deg, #b366ff 0%, #ff6b9d 48%, #ff8a65 100%));
+  border-radius: 9999px;
+  box-shadow: 0 10px 30px rgba(255, 107, 157, 0.28);
+}

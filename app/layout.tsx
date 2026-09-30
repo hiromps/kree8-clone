@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_JP, Caveat, Phudu } from "next/font/google";
 import "remixicon/fonts/remixicon.css";
 import "./globals.css";
 import { SiteChrome, SiteAside } from "@/components/chrome/SiteChrome";
 import MainShell from "@/components/chrome/MainShell";
+import { BottomTabBar } from "@/components/bottom-tab-bar/BottomTabBar";
 
 // Satoshi (Fontshare CDN, linked in <head> below) has no JP glyphs; Noto Sans JP
 // is chained after it so Latin text keeps Satoshi's metrics while Japanese falls
@@ -32,6 +33,13 @@ export const metadata: Metadata = {
     "自動化で、人とサービスをつなぐ。AIで無駄な作業を減らし、人・企業・サービスを自然につなぐ Social Smart の公式サイト。",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Enables env(safe-area-inset-bottom) so the bar clears the iPhone home indicator.
+  viewportFit: "cover",
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -49,6 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteAside />
           <MainShell>{children}</MainShell>
         </div>
+        <BottomTabBar />
       </body>
     </html>
   );
