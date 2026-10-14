@@ -283,6 +283,8 @@ body{background:var(--page-bg); color:var(--ink);}
   max-width:0;
   opacity:0;
   overflow:hidden;
+  /* Keep hidden text on one line so collapsing its width cannot inflate the nav row. */
+  white-space:nowrap;
   transition:max-width .2s ease-in-out, opacity .15s ease;
 }
 #site-aside.pg-collapsed:hover .nav-label{ max-width:170px; opacity:1; transition-delay:.05s; }
