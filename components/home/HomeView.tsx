@@ -14,10 +14,10 @@ const FRAG_ROTATIONS = [-12.4, 8.1, -3.7, 15.2, -8.9, 4.6, -15.8, 11.3, -6.2, 2.
 const TYPE_SIZES = [12, 14, 16, 18, 20, 24, 28, 32, 40, 48];
 
 const FLOW_STEPS = [
-  { art: "/images/flow/step-1.svg", icon: "ri-chat-3-fill", name: "01 相談・ヒアリング", desc: "課題とゴールを整理します" },
-  { art: "/images/flow/step-2.svg", icon: "ri-pencil-ruler-2-fill", name: "02 設計", desc: "最適な仕組みと構成をご提案" },
-  { art: "/images/flow/step-3.svg", icon: "ri-code-box-fill", name: "03 開発・自動化", desc: "実装し、自動化を組み込みます" },
-  { art: "/images/flow/step-4.svg", icon: "ri-line-chart-fill", name: "04 運用・改善", desc: "データを見ながら継続改善" },
+  { art: "/images/flow/step-1.svg", icon: "ri-chat-3-fill", name: "01 相談・ヒアリング", desc: "時間を取られていることを教えてください" },
+  { art: "/images/flow/step-2.svg", icon: "ri-pencil-ruler-2-fill", name: "02 設計", desc: "任せられる仕組みをこちらで考えます" },
+  { art: "/images/flow/step-3.svg", icon: "ri-code-box-fill", name: "03 開発・自動化", desc: "手作業を減らす仕組みをつくります" },
+  { art: "/images/flow/step-4.svg", icon: "ri-line-chart-fill", name: "04 運用・改善", desc: "生まれた時間を、あなたの次の一歩へ" },
 ];
 
 const SERVICE_AREAS = [
@@ -42,19 +42,23 @@ function Hero() {
   return (
     <section id="home" className="pb-10">
       <p className="inline-flex max-w-full items-center whitespace-nowrap max-[359px]:whitespace-normal rounded-full border border-[var(--pink-border)] bg-[var(--pink-tint)] px-3.5 py-1.5 text-[11px] min-[375px]:text-[12px] sm:px-4 sm:text-[13px] tracking-normal sm:tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">
-        AI×自動化で<span className="font-bold">5つのプロダクト</span>を開発・運営中
+        <span className="font-bold">AIを使って</span>無駄をなくす。
       </p>
       <h1 className="text-[28px] sm:text-[34px] md:text-[52px] leading-[1.15] font-bold max-w-3xl mb-8">
         <span className="text-[var(--ink)]">
-          AIで、社会をスマートに
+          考えるな、
         </span>
-        <span className="text-[var(--muted)]"> 自動化で、</span>
-        <span className="text-[var(--muted)]"> 人とサービスを </span>
-        <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">つなぐ</span>
+        <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">任せろ</span>
       </h1>
+      <p className="text-lg md:text-xl font-semibold text-[var(--ink-2)] max-w-2xl mb-4 leading-relaxed">
+        我々はモノやサービスを売るのではなく、時間を売っています。
+      </p>
+      <p className="text-[15px] md:text-base text-[var(--muted-2)] max-w-2xl mb-8 leading-relaxed">
+        考える時間、調べる時間、作業する時間、確認や待ち時間。その一つひとつにかかる労力と人件費まで。AIを使って、あらゆる業務に潜む無駄をなくす。仕組みづくりはSocial Smartに任せて、あなたの時間と資源を、本当にやりたいことへ。
+      </p>
       <div className="flex flex-wrap gap-3 mb-10">
         <a href={CONTACT_MAILTO} className="pill-btn pill-dark">
-          <i className="ri-mail-line"></i> お問い合わせ
+          <i className="ri-mail-line"></i> 任せたいことを相談する
         </a>
         <Link href="/products" className="pill-btn pill-light">
           <i className="ri-folder-open-line"></i> プロダクトを見る
@@ -125,10 +129,10 @@ function Mission() {
   return (
     <section className="py-10 sm:py-16 max-w-3xl reveal">
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)]">
-        私たちも、プロダクトをつくる過程が大好きです……ひとつのアイデア、ラフなスケッチ、「これは形になるかもしれない」という予感
+        新しいことを始めたい。事業を育てたい。大切な人との時間を増やしたい。あなたの時間には、もっと使いたい場所があるはずです。
       </p>
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--ink-2)] mt-6">
-        でもその先に、いつも同じ壁がありました…… <span className="highlight font-semibold">「終わらない手作業」</span>
+        でも、毎日の <span className="highlight font-semibold">「考える・調べる・作業する」</span> に、その時間とエネルギーが奪われていく。
       </p>
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--muted-2)] mt-6">
         毎日、同じ入力を何度も何度も繰り返す……
@@ -140,7 +144,7 @@ function Mission() {
         確認して、待って、また確認して……
       </p>
       <p className="hand text-xl md:text-2xl leading-relaxed text-[var(--muted-2)] mt-6">
-        気づけば、本当にやりたかったことに使う時間が残っていない。でもそれは、あなたのせいでも、ツールのせいでもありません
+        気づけば、本当にやりたかったことに使う時間が残っていない。どう効率化するかを調べるだけでも、また時間がかかる。
       </p>
 
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mt-14 mb-4">本当の課題は、何か?</p>
@@ -155,13 +159,15 @@ function Mission() {
         </div>
       </div>
       <ul className="hand text-xl text-[var(--muted-2)] space-y-2">
-        <li>— 手作業が多すぎる</li>
-        <li>— ツールが多すぎる</li>
-        <li>— 分断が多すぎる</li>
+        <li>— 何を使うか、どう進めるかを考える時間</li>
+        <li>— 情報を探し、比較し、使い方を調べる時間</li>
+        <li>— 設定や繰り返す作業にかかる労力</li>
+        <li>— 確認・連絡・やり直しに費やす時間</li>
+        <li>— 日々の手作業や運用にかかる人件費</li>
       </ul>
 
       <p className="hand text-3xl md:text-4xl text-[var(--ink)] mt-14 leading-snug">
-        仕事は、つぎはぎするものじゃない。<span className="highlight">ひとつの流れ</span>として動くべきだ
+        その手間は、私たちに任せてください。あなたの毎日に、<span className="highlight">自由に使える時間</span>を。
       </p>
     </section>
   );
@@ -170,9 +176,9 @@ function Mission() {
 function Services() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">私たちの答え</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">私たちの答え — AIを使って無駄をなくす。</p>
       <h2 className="text-2xl md:text-3xl font-bold mb-12 flex items-center flex-wrap gap-2">
-        だから、<img src="/images/logo-mark.svg" alt="" className="h-6 inline" /> <span>Social Smart</span> をつくりました
+        時間のロスをなくす仕組みを、<img src="/images/logo-mark.svg" alt="" className="h-6 inline" /> <span>Social Smart</span> がつくる
       </h2>
 
       <div className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-10 max-w-4xl">
@@ -353,7 +359,7 @@ function ServiceAreas() {
       </div>
 
       <p className="hand text-3xl md:text-4xl text-[var(--ink)] mt-16 max-w-xl leading-snug">
-        ここまで見ていただければ、きっと伝わったはずです。プロダクトには一貫した思想があり、体験はシンプルで、導入に大げさな準備はいりません
+        どのプロダクトも、目指すのは同じ。考える・調べる・作業する・確認する。あらゆる業務に潜む時間のロスと人件費のムダを減らし、大切な仕事に使える時間と資源を増やすこと。
       </p>
     </section>
   );
@@ -363,7 +369,7 @@ function Flow() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">進め方は?</p>
-      <h2 className="text-2xl md:text-3xl font-bold mb-10">ご依頼の流れ</h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-10">まずは、任せたいことをひとつ。</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FLOW_STEPS.map((step) => (
           <div key={step.name}>
@@ -386,7 +392,7 @@ function Vision() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">VISION</p>
-      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mb-10">AIが、電気やインターネットのように&quot;当たり前&quot;になる社会へ</p>
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mb-10">誰もが、自分の時間を自分のために使える社会へ。</p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-14">
         <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
@@ -413,9 +419,9 @@ function Vision() {
         </div>
       </div>
 
-      <p className="hand text-xl text-[var(--ink-2)] mb-2">開発者ファースト。でも、届けたいのは&quot;人の時間&quot;</p>
+      <p className="hand text-xl text-[var(--ink-2)] mb-2">AIを使って無駄をなくす。それが、私たちの提供価値。</p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-14 leading-relaxed">
-        Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。小さいからこそ判断は速く、思想は一貫しています。AIは目的ではなく、人がより価値あることに集中するための手段──その信念で、すべてのプロダクトをつくっています
+        Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。AIを活用し、自動化やWeb制作を通じて、あらゆる業務に潜む時間のロスや労力、人件費の無駄を減らします。仕組みづくりから運用まで任せられることを増やし、人が力を注ぎたい仕事に集中できる毎日を目指しています。
       </p>
 
       <div className="marquee-mask overflow-hidden w-full">
@@ -444,13 +450,13 @@ function FinalNote() {
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-6">最後に</p>
       <p className="hand text-3xl md:text-4xl text-[var(--ink)] max-w-2xl leading-snug mb-6">
-        Social Smart は、&quot;AIを使うこと&quot;そのものが目的ではありません。人がより価値あることに集中できる<span className="highlight">時間をつくる</span>ためのプロジェクトです
+        考えるな、任せろ<br />あなたの<span className="highlight">時間を取り戻そう。</span>
       </p>
       <p className="hand text-xl text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
-        無駄な作業を減らしたい。人と企業とサービスを、もっと自然につなぎたい。そう感じたら、いつでも気軽にご連絡ください
+        何を任せられるか、まだ整理できていなくても大丈夫。考えるのに時間がかかること、調べてもわからないこと、手間のかかる作業から聞かせてください。
       </p>
       <p className="hand text-xl text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
-        たくさんのツールはいりません。難しく考える必要もありません。必要なのは <span className="highlight">Social Smart</span> だけ
+        仕組みは <span className="highlight">Social Smart</span> に任せて、生まれた時間で、あなたの次の一歩を。
       </p>
 
       <div className="flex flex-wrap gap-6 sm:gap-10 mb-12">

@@ -28,9 +28,9 @@ const phudu = Phudu({
 });
 
 export const metadata: Metadata = {
-  title: "Social Smart | AIで、社会をスマートに",
+  title: "Social Smart | 考えるな、任せろ",
   description:
-    "自動化で、人とサービスをつなぐ。AIで無駄な作業を減らし、人・企業・サービスを自然につなぐ Social Smart の公式サイト。",
+    "考えるな、任せろ AIを使って無駄をなくす。我々はモノやサービスを売るのではなく、時間を売っています。自動化・Web制作を通じて、あらゆる業務に潜む時間のロス、労力、人件費の無駄を減らす Social Smart。",
 };
 
 export const viewport: Viewport = {
