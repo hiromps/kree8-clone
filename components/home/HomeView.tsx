@@ -42,7 +42,7 @@ function Hero() {
   return (
     <section id="home" className="pb-10">
       <p className="inline-flex max-w-full items-center whitespace-nowrap max-[359px]:whitespace-normal rounded-full border border-[var(--pink-border)] bg-[var(--pink-tint)] px-3.5 py-1.5 text-[11px] min-[375px]:text-[12px] sm:px-4 sm:text-[13px] tracking-normal sm:tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">
-        <span className="font-bold">AIを使って</span>無駄をなくす。
+        <span className="font-bold">AIを使って</span>無駄をなくす
       </p>
       <h1 className="text-[28px] sm:text-[34px] md:text-[52px] leading-[1.15] font-bold max-w-3xl mb-8">
         <span className="text-[var(--ink)]">
@@ -51,7 +51,7 @@ function Hero() {
         <span className="bg-[linear-gradient(135deg,#B366FF_0%,#FF6B9D_48%,#FF8A65_100%)] bg-clip-text text-transparent">任せろ</span>
       </h1>
       <p className="text-lg md:text-xl font-semibold text-[var(--ink-2)] max-w-2xl mb-4 leading-relaxed">
-        我々はモノやサービスを売るのではなく、時間を売っています。
+        我々はモノやサービスを売るのではなく、時間を売っています
       </p>
       <p className="text-[15px] md:text-base text-[var(--muted-2)] max-w-2xl mb-8 leading-relaxed">
         考える時間、調べる時間、作業する時間、確認や待ち時間。その一つひとつにかかる労力と人件費まで。AIを使って、あらゆる業務に潜む無駄をなくす。仕組みづくりはSocial Smartに任せて、あなたの時間と資源を、本当にやりたいことへ。
@@ -176,7 +176,7 @@ function Mission() {
 function Services() {
   return (
     <section className="py-10 sm:py-16 reveal">
-      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">私たちの答え — AIを使って無駄をなくす。</p>
+      <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-4">私たちの答え — AIを使って無駄をなくす</p>
       <h2 className="text-2xl md:text-3xl font-bold mb-12 flex items-center flex-wrap gap-2">
         時間のロスをなくす仕組みを、<img src="/images/logo-mark.svg" alt="" className="h-6 inline" /> <span>Social Smart</span> がつくる
       </h2>
@@ -369,7 +369,7 @@ function Flow() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">進め方は?</p>
-      <h2 className="text-2xl md:text-3xl font-bold mb-10">まずは、任せたいことをひとつ。</h2>
+      <h2 className="text-2xl md:text-3xl font-bold mb-10">まずは、任せたいことをひとつ</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FLOW_STEPS.map((step) => (
           <div key={step.name}>
@@ -392,7 +392,7 @@ function Vision() {
   return (
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-2">VISION</p>
-      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mb-10">誰もが、自分の時間を自分のために使える社会へ。</p>
+      <p className="hand text-3xl md:text-4xl text-[var(--ink)] mb-10">誰もが、自分の時間を自分のために使える社会へ</p>
 
       <div className="grid md:grid-cols-2 gap-6 mb-14">
         <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_18px_50px_rgba(40,40,60,0.08)]">
@@ -419,7 +419,7 @@ function Vision() {
         </div>
       </div>
 
-      <p className="hand text-xl text-[var(--ink-2)] mb-2">AIを使って無駄をなくす。それが、私たちの提供価値。</p>
+      <p className="hand text-xl text-[var(--ink-2)] mb-2">AIを使って無駄をなくす、それが、私たちの提供価値</p>
       <p className="text-lg text-[var(--muted-2)] max-w-xl mb-14 leading-relaxed">
         Social Smart は、hiromps がひとりで企画・デザイン・開発・運用まで手がける個人開発プロジェクトです。AIを活用し、自動化やWeb制作を通じて、あらゆる業務に潜む時間のロスや労力、人件費の無駄を減らします。仕組みづくりから運用まで任せられることを増やし、人が力を注ぎたい仕事に集中できる毎日を目指しています。
       </p>
@@ -450,7 +450,7 @@ function FinalNote() {
     <section className="py-10 sm:py-16 reveal">
       <p className="text-sm tracking-wide text-[var(--pilot-pink)] font-semibold mb-6">最後に</p>
       <p className="hand text-3xl md:text-4xl text-[var(--ink)] max-w-2xl leading-snug mb-6">
-        考えるな、任せろ<br />あなたの<span className="highlight">時間を取り戻そう。</span>
+        考えるな、任せろ<br />あなたの<span className="highlight">時間を取り戻そう</span>
       </p>
       <p className="hand text-xl text-[var(--muted-2)] max-w-xl mb-10 leading-relaxed">
         何を任せられるか、まだ整理できていなくても大丈夫。考えるのに時間がかかること、調べてもわからないこと、手間のかかる作業から聞かせてください。
